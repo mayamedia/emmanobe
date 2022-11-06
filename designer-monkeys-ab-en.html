@@ -1,0 +1,1886 @@
+{% extends store.template_path %}
+{% load static %}
+{% load store %}
+{% load compress %}
+{% load thumbnail %}
+{% load transla %}
+{% load humanize %}
+
+{% block header %}
+{% endblock %}
+{% block content %}
+
+	<style>
+        .abz {display:none}
+        .radio-not {
+            border: 1px solid #6c757d!important;
+        }
+
+        .radio-selected {
+            border:2px solid #4e54c8!important;
+        }/* latin-ext */
+        .shadow, .shadow-active:active, .shadow-focus:focus, .shadow-hover:hover {
+            box-shadow: 0 .5rem 1rem rgba(29,48,61,.85)!important;
+            font-weight:400;
+            font-size:1.25rem;
+        }
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .3s;
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+        }
+	</style>
+
+	<main id="content" class="mb-10 border-top">
+		<section id="products" class="container">
+			<div class="modal" tabindex="-1" role="dialog" id="modalSmall" data-keyboard="false" data-backdrop="static">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">{% translater 'Creating Your Custom Merchandise' store.default_color%} </h5>
+						</div>
+						<div class="modal-body">
+							<div class="progress mb-3">
+								<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+									 :style="'width:'+percent +'%'"></div>
+							</div>
+							<div class="list-group">
+								<p>Please wait...</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+
+				<div class="col-12 col-lg-7 pr-xl-9 mt-0 mt-md-3 " style="position:relative">
+
+
+
+					<picture id="picture">
+						<pinch-zoom v-if="!printog">
+
+							<vue-canvas :image="getCurrentItem.mockups[0]" :designs="'{{ object.product.default_design.get_image_url }}'"
+										:key="getCurrentItem.mockups[0]"></vue-canvas>
+						</pinch-zoom>
+						<img src="{{ object.product.get_image.url }}" alt="" id="noncloackimg" style="max-width:100%" v-else>
+					</picture>
+					<span class="badge badge-primary fs-10" style="position:absolute;left:20px;top:10px;">[[ $t('messages["PERSONALIZED"]')]]</span>
+
+				</div>
+				<div class="col-12 col-lg-5 px-5 px-md-0">
+					<div class="mb-0 mb-lg-5">
+						<div class="pb-3  mt-5">
+							<section v-if="showing===-1">
+								<div class="d-flex mt-3 ">
+						<ul class="list-inline d-flex mb-0 rating-result">
+										<li class="list-inline-item mr-0">
+											<span class="text-primary fs-12 lh-2"><i class="fas fa-star"></i></span>
+										</li>
+										<li class="list-inline-item mr-0">
+											<span class="text-primary fs-12 lh-2"><i class="fas fa-star"></i></span>
+										</li>
+										<li class="list-inline-item mr-0">
+											<span class="text-primary fs-12 lh-2"><i class="fas fa-star"></i></span>
+										</li>
+										<li class="list-inline-item mr-0">
+											<span class="text-primary fs-12 lh-2"><i class="fas fa-star"></i></span>
+										</li>
+										<li class="list-inline-item mr-0">
+											<span class="text-primary fs-12 lh-2"><i class="fas fa-star"></i></span>
+										</li>
+									</ul>
+						<small style="margin-left:10px;    color: black;padding-top: 5px;">{% translater 'Over 221,878+ HAPPY CUSTOMERS' store.default_color %}</small>
+						</div>
+							<h1 class="fs-28" style="font-weight:900">Personalized Acrylic Ornament</h1>
+							<h2 class="fs-14 mb-2" style="letter-spacing: 1.2px;text-transform: uppercase;">{{ object.product.description}}</h2>
+
+
+
+
+
+							</section>
+
+
+						</div>
+
+
+						<transition name="fade" tag="div" mode="out-in">
+							<div v-if="showing<=0  && question_group">
+
+								<h6 v-if="showing <= 0" id="question_let">Let's Create Your Ornament</h6>
+								<div class="order-lg-1 pr-lg-4 text-lg-left">
+
+									<p class="text-secondary fs-16">[[ $t("messages['Ile osób chcesz na swoim projekcie?']") ]] </p>
+								</div>
+								<h7 class="text-danger  d-none" id="showerror"><b>[[ $t("messages['**Wybierz ile osób']") ]]</b>
+								</h7>
+								<div class=" d-flex justify-content-start flex-wrap align-items-start w-md-75">
+
+									<div class="form-check-option form-check-rounded" v-for="key, index in question_group"
+										 @click="setShowing(index);fbq('track','StartedDesigning');gtag('config', '{{ store.google_tag }}', {'page_path': '/{{ object.product.design_url }}?step=designing'});">
+
+                                        						<button class="btn btn-sm mr-1 mb-3  fs-16 btn-outline-secondary"
+													@click="setShowing(index);fbq('track','StartedDesigning');gtag('config', '{{ store.google_tag }}', {'page_path': '/{{ object.product.design_url }}?step=designing'});"
+													style="padding:5px!important;line-height:20px!important; border-color:#666;font-size:18px;font-weight:900">[[index]]<br>
+                                                                    <small style="font-weight:100;font-size:10px;text-transform:uppercase;">Sisters</small>
+											</button>
+
+									</div>
+								</div>
+								<button class="btn btn-secondary mt-3 mt-3 shadow w-100 mt-4 mb-0 hover-lift-sm hover-boxshadow" style="font-size:1.0rem; font-weight:800;"
+										onclick="document.getElementById('showerror').classList.remove('d-none')">Customize & Buy ⟶
+								</button>
+								{% comment %}<div class="d-block" v-if="showing===0">
+									<button class="btn btn-block btn-outline-info mt-5 w-100 "
+											@click="show_alZt=true;document.getElementById('showalt').scrollIntoView();">
+										[[ $t("messages['Change Product']") ]]
+									</button>
+								</div>{% endcomment %}
+
+							</div>
+						</transition>
+
+						<section v-if="question_group">
+							<h6 v-if="showing>0">[[ $t("messages['Personalizuj swoją koszulkę']") ]]</h6>
+							<transition-group name="fade" tag="div" mode="out-in">
+								<div id="question_top" v-for="question_set, index in question_group" :key="index"
+									 v-if="showing==index">
+
+
+									<div v-for="question, answer, count in question_set">
+										<transition-group name="fade" tag="div" mode="out-in">
+											<div v-for="keys, title, counts in question.attributes"
+												 v-if="getStep(count, counts, keys)" :key="title+'-'+index" class=" mb-2">
+												<h4 class="" v-if="keys.questiongroup && getFirstGrouping(keys, counts)">
+													[[keys.questiongroup]]</h4>
+												<div class="form-inner-area" v-if="keys.type == 'D'"
+													 style="font-size: 2rem;font-weight: 700;">
+													<div class="form-group form-check mb-2" style="padding-left:0px">
+														<input class="custom-control-input" type="checkbox"
+															   v-model="keys.answer" :name="title" :id="title">
+														<label class="custom-control-label" :for="title"
+															   style="font-size:1.3rem;font-weight:500">[[ $t("messages['Add a Halo to this Name']") ]]</label>
+													</div>
+													<button class="btn btn-accent mt-3 mt-3 w-100 btn-shadow btn-block px-5 mr-2 mt-3"
+
+															@click="getNextStep(count, counts, title)"
+															v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+														<i class="mr-2"
+														   data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]] ⟶
+													</button>
+
+												</div>
+												<div class="form-inner-area" v-if="keys.type == 'B'"
+													 style="font-size: 2rem;font-weight: 700;">
+													<h4 class="d-block h4 pr-2 pl-2 ">[[ keys.question ]]
+														<small style="display:block;color:red;" class="error"
+															   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+														</small>
+													</h4>
+													<input type="hidden" v-model="keys.answer" :name="title"/>
+													<ul v-if="!keys.show" class="list-unstyled">
+														<li>
+
+															<button type="button"
+																	@click="keys.show=false;keys.answer=choice;getNextStep(count, counts, title)"
+																	class="btn m-1"
+																	:class="[{ 'btn-accent mt-3 mt-3': keys.answer===choice },{'btn-outline-dark':keys.answer!==choice}]"
+																	v-for="choice, index in keys.answers">
+																[[ choice ]]
+															</button>
+															<button type="button" @click="keys.show=true"
+																	class="btn btn-outline-dark btn-click text-center ">
+																[[ $t("messages['Wpisz dowolny text']") ]]
+															</button>
+														</li>
+													</ul>
+													<label class="d-block mt-2" style="font-size:1.1rem;font-weight:500"
+														   v-if="keys.show">[[ title ]]
+														<small style="display:bottom;color:red;" class="error"
+															   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+														</small>
+													</label>
+													<input type="text" class="form-control" v-model="keys.answer"
+														   :name="title"
+														   v-validate="'required'" autocomplete="off"
+														   :placeholder="keys.help_text"
+														   :maxlength="keys.maxlength" autocomplete="off"
+														   v-if="keys.show"/>
+													<small v-if="keys.maxlength<100 && keys.show">([[ $t("messages['Maksymalnie']") ]] [[ keys.maxlength || 10 ]] [[ $t("messages['Liter']") ]])
+													</small>
+
+													<button class="btn btn-accent mt-3 mt-3 btn-shadow btn-block px-5 shadow mr-2 mt-5"
+
+															v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping"
+															style="height: 75px;color: #fff;display: block;font-size: 24px;font-weight: 500;border-radius: 5px;text-align: center;background-color: #6b59d3;border: 0;cursor: pointer;">
+														<i class="mr-2" data-feather="shopping-cart"></i>Next Step 👉
+													</button>
+
+												</div>
+												<div class="form-inner-area" v-if="keys.type == 'P'"
+													 style="font-size: 2rem;font-weight: 700;">
+													<h2 class="d-block h5 pr-2 pl-2 ">Czy chcesz spersonalizować środkowy tekst na koszulce?
+														<small style="display:block;color:red;" class="error"
+															   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+														</small>
+													</h2>
+													<ul style="list-style: none;padding-left:0">
+														<li>
+															<button type="button"
+																	@click="keys.show=false;getNextStep(count, counts, title)"
+																	class="btn btn-lg btn-click  btn-outline-dark text-center w-100"
+																	v-if="isMobile">[[ $t("messages['Zostaw jako']") ]] [[keys.answer]]
+															</button>
+															<button type="button"
+																	@click="keys.show=false;getNextStep(count, counts, title)"
+																	class="btn btn-lg btn-click text-center w-100"
+																	:class="[keys.answer == 'Sisters' && !keys.show ? 'btn-accent mt-3 mt-3' : 'btn-outline-dark']"
+																	v-else>[[ $t("messages['Zostaw jako']") ]] [[keys.answer]]
+															</button>
+
+															<button type="button" @click="keys.show=true"
+																	class="mt-2 btn btn-lg btn-click text-center btn-outline-dark   w-100"
+																	v-if="isMobile">[[ $t("messages['Chcę zmienić tekst']") ]]
+															</button>
+															<button type="button" @click="keys.show=true"
+																	class="mt-2 btn btn-lg btn-click text-center   w-100"
+																	:class="[keys.show ? 'btn-accent mt-3 mt-3' : 'btn-outline-dark']"
+																	v-else>[[ $t("messages['Chcę zmienić tekst']") ]]
+															</button>
+
+														</li>
+													</ul>
+													<label class="d-block mt-2" style="font-size:1.3rem;font-weight:500"
+														   v-if="keys.show">[[ title ]]
+														<small style="display:bottom;color:red;" class="error"
+															   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+														</small>
+													</label>
+													<input type="text" class="form-control" v-model="keys.answer"
+														   :name="title"
+														   v-validate="'required'" :placeholder="keys.help_text"
+														   :maxlength="keys.maxlength" autocomplete="off" v-if="keys.show"/>
+													<small v-if="keys.maxlength<100 && keys.show">([[ $t("messages['Maksymalnie']") ]] [[ keys.maxlength || 10 ]] [[ $t("messages['Liter']") ]])
+													</small>
+
+													<button class="btn btn-accent mt-3 mt-3 w-100 btn-block px-5 mr-2 mt-3"
+
+															v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+														<i class="mr-2"
+														   data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]] ⟶
+													</button>
+
+												</div>
+												<div class="form-inner-area" v-if="keys.type == 'F'">
+
+													<section id="hida">
+														<label class="d-block" style="font-size:1.3rem;font-weight:500">
+															[[ $t("messages['Ile osób chcesz na swoim projekcie?']") ]]:														<small style="display:block;color:red;" class="error"
+																																													   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+														</small>
+														</label>
+														<button type="button"
+																style="background:white!important;height: 40px;width: 100px;color: #6b59d3;font-size: 24px;font-weight: 500;border-radius: 5px;text-align: center;border: 2px solid #6b59d3!important;margin: 5px;cursor: pointer;"
+																v-for="index in 6" :key="index"
+																@click="setTodoList(index, keys);$('#hida').addClass('d-none');$('#hidea').removeClass('d-none');gtag('config', '{{ store.google_tracking_id }}', {'page_path': '/{{ object.slug }}?step=personalizing'})"
+																v-if="Object.entries(keys.answer).length === 0">[[index]]
+														</button>
+														<button type="button"
+																style="background:white!important;height: 40px;width: 250px;color: #6b59d3;font-size: 24px;font-weight: 500;border-radius: 5px;text-align: center;border: 2px solid #6b59d3!important;margin: 5px;cursor: pointer;"
+																@click="$('#hida').addClass('d-none');$('#hiddent').removeClass('d-none');$('#hiddnet').removeClass('d-none');gtag('config', '{{ store.google_tracking_id }}', {'page_path': '/{{ object.slug }}?step=personalizing'})"
+																v-if="Object.entries(keys.answer).length === 0">[[ $t("messages['Więcej niż 6']") ]]
+														</button>
+													</section>
+													<input type="hidden" v-model="keys.answer" v-validate="'required'"
+														   :name="title"/>
+
+													<section id="hiddent" class="d-none">
+														<section id="hiddnet" class="d-none">
+															<p class="d-block mb-0"><b>[[ $t("messages['Wpisz nazwę i kliknij Zapisz']") ]]</b></p>
+														</section>
+														<input type="text" class="form-control" v-model="keys.stored_answer"
+															   :placeholder="keys.help_text"
+															   :maxlength="keys.maxlength" autocomplete="off"
+															   @keyup.enter="addTodo(keys)"/>
+														<button class="btn btn-success btn-shadow btn-block mb-5"
+																@click="addTodo(keys)" :disabled="!keys.stored_answer">
+															[[ $t("messages['Zapisz']") ]]
+														</button>
+													</section>
+
+													<h4 id="hidea" class="mb-3 d-none">[[ $t("messages['Proszę wypełnić imiona poniżej']") ]]</h4>
+													<ul class="list-group" v-if="Object.entries(keys.answer).length > 0">
+
+														<li class="list-group-item" v-for="key, value in keys.answer">
+															<section class="d-flex">
+																<input v-model="keys.answer[value]" class="form-control"
+																	   style="width:90%" :maxlength="keys.maxlength"
+																	   autocomplete="off" type="text" :name="value"
+																	   v-validate="'required'" placeholder="{% translater 'Wpisz imię' store.default_color %}"/>
+																<span @click="removeTodo(keys.answer, value)"
+																	  class="float-right"><i
+																		class="ri-close-circle-fill"></i></span>
+															</section>
+															<small style="display:block;color:red;" class="error"
+																   v-if="errors.has(value)">[[ $t("messages['To pole jest wymagane']") ]] </small>
+														</li>
+													</ul>
+													<btn v-if="Object.entries(keys.answer).length > 0"
+														 @click="$('#hiddenat').removeClass('d-none');hiddenat=true;"
+														 v-if="!hiddenat" type="button" class="mt-2 btn btn-sm btn-outline-info">[[ $t("messages['[+] Dodaj osobę']") ]]</btn>
+													<section id="hiddenat" class="d-none">
+
+														<p class="d-block mb-0"><b></b></p>
+
+
+														<input type="text" class="form-control" v-model="keys.stored_answer"
+															   :placeholder="keys.help_text"
+															   :maxlength="keys.maxlength" autocomplete="off"
+															   @keyup.enter="addTodo(keys);$('#hiddenat').addClass('d-none');hiddenat=false;"/>
+														<button class="btn btn-success btn-shadow btn-block mb-5"
+																@click="addTodo(keys);$('#hiddenat').addClass('d-none');hiddenat=false;"
+																:disabled="!keys.stored_answer">[[ $t("messages['Zapisz']") ]]
+														</button>
+													</section>
+
+
+												</div>
+												<div class="form-group mb-1" v-if="keys.type == 'T'">
+													<h6 class="d-block" style="font-size:1.3rem;font-weight:500">[[ keys.question ]]
+														<small style="display:block;color:red;" class="error"
+															   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+														</small>
+													</h6>
+													<input type="text" class="form-control" v-model="keys.answer"
+														   :name="title"
+														   v-validate="'required'" :maxlength="keys.maxlength || 10"
+														   :placeholder="keys.help_text" autocomplete="off"/>
+													<small> ([[ $t("messages['Maksymalnie']") ]] [[ keys.maxlength || 10 ]] [[ $t("messages['Liter']") ]])</small>
+													<button class="btn btn-accent mt-3 mt-3 w-100 btn-shadow btn-block px-5 mr-2 mt-3"
+															@click="getNextStep(count, counts, 'true')"
+															v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+														<i class="mr-2"
+														   data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]] ⟶
+													</button>
+
+												</div>
+												<div class="form-group mb-1" v-if="keys.type == 'R'">
+													<h6 class="d-block">[[ keys.question ]]
+														<small style="display:block;color:red;" class="error"
+															   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+														</small>
+													</h6>
+													<div class="custom-control custom-option custom-control-inline mb-2 btn btn-outline-dark"
+														 v-for="answer, index in keys.answers">
+														<input class="custom-control-input" type="radio" :name="title"
+															   v-model="keys.answer" v-validate="'required'"
+															   v-bind:value="index"
+															   :id="title+'-'+index"
+															   @change="pushChange(keys);getNextStep(count, counts, 'true')">
+														<label class="custom-option-label" :for="title+'-'+index"
+														> [[ index ]] </label>
+													</div>
+													<button class="btn shadow btn-accent mt-3 mt-3 btn-shadow btn-block px-5 mr-2 mt-3"
+
+															v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+														<i class="mr-2"
+														   data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]] ⟶
+													</button>
+												</div>
+
+												<div class="form-group mb-1" v-if="keys.type == 'S'">
+													<h6 class="d-block" style="font-size:1.3rem;font-weight:500">[[
+														keys.question ]]
+														<small style="display:block;color:red;" class="error"
+															   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+														</small>
+													</h6>
+													<select class="form-control form-select" id="select-input"
+															v-model="keys.answer" v-validate.continues="'required'"
+															:name="title">
+														<option value="" disabled selected>Pick a State</option>
+														<option v-for="answer, index in keys.answers" v-bind:value="index">
+															[[ answer.title ]]
+														</option>
+													</select>
+
+													<button class="btn btn-accent mt-3 mt-3 w-100 btn-block px-5 mr-2 mt-3"
+
+															v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+														<i class="mr-2"
+														   data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]] ⟶
+													</button>
+												</div>
+												<div class="form-group mb-1" v-if="keys.type == 'I'">
+													<h6 class="d-block" style="font-size:1.3rem;font-weight:500">[[ keys.question ]]
+														<small style="display:block;color:red;" class="error"
+															   v-if="errors.has('selection-'+keys.question+keys.questiongroup)">[[ $t("messages['To pole jest wymagane']") ]]
+														</small>
+													</h6>
+													<div class="radio-tile-group"
+														 style="justify-content: left;display: -webkit-box;display: flex;flex-wrap: wrap;-webkit-box-pack: center;">
+														<div class="input-container" v-for="answer, index in keys.answers"
+															 style="position: relative;height: 75px;width: 75px;margin: 0.5rem;">
+															<input id="walk" class="radio-button" type="radio"
+																   :value="index"
+																   v-model="keys.answer"
+																   :name="'selection-'+keys.question+keys.questiongroup"
+																   v-validate="'required'" autocomplete="off"
+																   style="opacity: 0;position: absolute;top: 0;left: 0;height: 100%;width: 100%;margin: 0;cursor: pointer;"/>
+															<div class="radio-tile"
+																 :class="[{ 'radio-selected': keys.answer===index }]"
+																 style="height:auto!important;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #a4a4a4;
+    -webkit-transition: -webkit-transform 300ms ease;
+    transition: -webkit-transform 300ms ease;
+    transition: transform 300ms ease;
+    transition: transform 300ms ease, -webkit-transform 300ms ease;
+}">
+																<img :src="answer.image"
+																	 style="max-width:95%;height:auto;margin:auto"/>
+															</div>
+
+														</div>
+													</div>
+													<button class="btn shadow btn-accent mt-3 mt-3 btn-shadow btn-block px-5 mr-2"
+															@click="getNextStep(count, counts, 'true')"
+															v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+														<i class="mr-2" data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]]
+													</button>
+
+												</div>
+												<div class="form-group mb-1" v-if="keys.type == 'W'">
+													<h6 class="d-block">[[ keys.question ]]
+														<small style="display:block;color:red;" class="error"
+															   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+														</small>
+													</h6>
+													<select class="form-control form-select" id="select-input"
+															v-model="keys.selection">
+
+														<option v-for="answer, index in keys.answers" v-bind:value="answer"
+																:name="title" v-validate="'required'">[[ index]]
+														</option>
+													</select>
+													<div v-if="keys.selection">
+														[[ keys.selection.answers ]]
+														<h7 class="d-block">[[ keys.selection.title ]]
+															<small style="display:block;color:red;" class="error"
+																   v-if="errors.has(keys.selection)">[[ $t("messages['To pole jest wymagane']") ]]
+															</small>
+														</h7>
+														<select class="form-control form-select" id="select-input"
+																v-model="keys.answer">
+															<option v-for="answer, index in keys.selection.answers"
+																	v-bind:value="index" :name="keys.selection"
+																	v-validate="'required'">[[ answer.title ]]
+															</option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group mb-1" v-if="keys.type == 'V'">
+													<input type="hidden" v-model="keys.answer"  v-validate="'required'" :name="'selection-'+keys.question+keys.questiongroup"/>
+													<h6 class="d-block">[[ keys.question ]]
+														<small style="display:block;color:red;" class="error"
+															   v-if="errors.has('selection-'+keys.question+keys.questiongroup) && !keys.answer">[[ $t("messages['To pole jest wymagane']") ]]
+														</small>
+
+													</h6>
+													<div class="radio-tile-group"
+														 style="justify-content: left;display: -webkit-box;display: flex;flex-wrap: wrap;-webkit-box-pack: center;">
+														<div class="input-container" v-for="answer, index in keys.answers"
+															 style="position: relative;height: 50px;width: 50px;margin: 0.5rem;">
+															<section v-if="answer.answers">
+																<input id="walk" class="radio-button" type="radio"
+																	   :value="answer" @click="keys.answer =''"
+																	   v-model="keys.selection"
+																	   :name="'selector-'+keys.title"
+																	   style="opacity: 0;position: absolute;top: 0px;left: 0px;height: 100%;width: 100%;margin: 0px;cursor: pointer;"/>
+																<div class="radio-tile"
+																	 :class="[{ 'radio-selected': keys.selection===answer }]"
+																	 style="height:auto!important;display: flex;-webkit-box-orient: vertical;-webkit-box-direction: normal;flex-direction: column;-webkit-box-align: center;align-items: center;-webkit-box-pack: center;justify-content: center;width: 100%;height: 100%;border: 1px solid #a4a4a4;-webkit-transition: -webkit-transform 300ms ease;transition: -webkit-transform 300ms ease;">
+																	<img :src="answer.image"
+																		 style="max-width:95%;height:auto;margin:auto"/>
+																</div>
+															</section>
+															<section v-else>
+																<input id="walk" class="radio-button" type="radio"
+																	   :value="index"
+																	   v-model="keys.answer"
+																	   :name="'selection-'+keys.question+keys.questiongroup"
+																	   @click="keys.selection = '';"
+																	   @change="pushChange(keys);getNextStep(count, counts, 'true')"
+																	   style="opacity: 0;position: absolute;top: 0;left: 0;height: 100%;width: 100%;margin: 0;cursor: pointer;"/>
+																<div class="radio-tile"
+																	 :class="[{ 'radio-selected': keys.answer === index }]"
+																	 style="height:auto!important;display: flex;-webkit-box-orient: vertical;-webkit-box-direction: normal;flex-direction: column;-webkit-box-align: center;align-items: center;-webkit-box-pack: center;justify-content: center;width: 100%;height: 100%;border: 1px solid #a4a4a4;-webkit-transition: -webkit-transform 300ms ease;transition: -webkit-transform 300ms ease;">
+																	<img :src="answer.image"
+																		 style="max-width:95%;height:auto;margin:auto"/>
+																</div>
+															</section>
+
+														</div>
+
+														<div style="width:100%;display:flex;flex-wrap: wrap;"
+															 v-if="keys.selection">
+															<div class="input-container"
+																 v-for="answer, index in keys.selection.answers"
+																 style="position: relative;height: 100px;width: 100px;margin: 0.5rem;">
+																<input id="walk" class="radio-button" type="radio"
+																	   :value="index" v-model="keys.answer"
+																	   @change="pushChange(keys);getNextStep(count, counts, 'true')"
+																	   style="opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    cursor: pointer;"/>
+																<div class="radio-tile"
+																	 :class="[{ 'radio-selected': keys.answer === index }]"
+																	 style="height:auto!important;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #a4a4a4;
+    -webkit-transition: -webkit-transform 300ms ease;
+    transition: -webkit-transform 300ms ease;
+    transition: transform 300ms ease;
+    transition: transform 300ms ease, -webkit-transform 300ms ease;
+}">
+																	<img :src="answer.image"
+																		 style="max-width:95%;height:auto;margin:auto"/>
+																</div>
+
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="form-group mb-1" v-if="keys.type == 'C'">
+													<h6 class="d-block">[[ keys.question ]]
+														<small style="display:block;color:red;" class="error"
+															   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+														</small>
+													</h6>
+
+													<croppa class="c1" v-model="myCroppa"
+															:width="300"
+															:height="300"
+															quality="4"
+															placeholder=""
+															:show-remove-button="true"
+															:prevent-white-space="true"
+															:initial-image="initial"
+															:accept="'image/*'"
+															:show-loading="true"
+															@file-size-exceed="handleFileSizeExceed"
+															@file-type-mismatch="handleFileTypeMismatch"
+															@draw="onDraw"
+															@zoom="onZoom">
+														<img slot="placeholder" src="{% static 'img/taptoupload.png' %}"/>
+													</croppa>
+													<div v-if="!imageNotSelected" class="d-none d-md-block">
+														<small>[[ $t("messages['Adjust Zoom']") ]]</small>
+														<input type="range" @input="onSliderChange" :min="sliderMin"
+															   :max="sliderMax" step=".001" v-model="sliderVal"
+															   :name="title"
+															   v-validate="'required'">
+
+													</div>
+
+													<input name="base64" id="picture" type="hidden" :value="dataUrl"
+														   v-bind:change="setPicture(keys)"/>
+												</div>
+											</div>
+										</transition-group>
+									</div>
+
+									<form class="pb-4" method="POST" action="/products/{{ object.product.slug }}/context"
+										  @submit="submitForm" id="generateForm" ref="form">
+										<div class="fd-flex flex-wrap pt-1">
+											{% csrf_token %}
+											<div v-if="getLastStep==isLastStep  && isMobile()">
+												<button class="btn btn-accent mt-3 mt-3 btn-shadow btn-block px-5 shadow" type="submit">
+													<i class="mr-2" data-feather="shopping-cart" ></i>
+													[[ $t("messages['Podglądnij swoją koszulkę']") ]] ⟶
+												</button>
+											</div>
+											<div v-if="!isMobile()">
+												<button class="btn btn-accent mt-3 mt-3 btn-shadow btn-block px-5 shadow" type="submit">
+													<i class="mr-2" data-feather="shopping-cart"></i>
+													[[ $t("messages['Podglądnij swoją koszulkę']") ]] ⟶
+												</button>
+											</div>
+										</div>
+										<div class="mt-3 text-center">
+											<small>
+												<a class="btn btn-sm btn-outline-info" @click="editting=false"
+												   v-if="stored_data">Go back to selecting quantity →</a>
+											</small>
+										</div>
+										<input name="json" :value="inputJSON" type="hidden"/>
+										<input name="collection" value="true" type="hidden"/>
+										<input name="print" :value='selectedPrint' type="hidden" v-if="selectedPrint!=1"/>
+									</form>
+									<div class="d-block">
+
+										<button class="btn btn-block btn-outline-info w-100 mt-1 " @click="showing=0">[[ $t('messages["Zmień Osoby"]')]]
+										</button>
+									</div>
+								</div>
+							</transition-group>
+						</section>
+						<section v-else>
+							<h6 v-if="showing>0">[[ $t("messages['Personalizuj swoją koszulkę']") ]]</h6>
+							<div v-for="question, answer, count in question_set">
+								<transition-group name="fade" tag="div" mode="out-in">
+									<div v-for="keys, title, counts in question.attributes"
+										 v-if="getStep(count, counts, keys)"
+										 :key="title+'-'+count" class=" mb-2">
+										<h4 class="" v-if="keys.questiongroup && getFirstGrouping(keys, counts)">
+											[[keys.questiongroup]]</h4>
+										<div class="form-inner-area" v-if="keys.type == 'D'"
+											 style="font-size: 2rem;font-weight: 700;">
+											<div class="form-group form-check mb-2" style="padding-left:0px">
+												<input class="custom-control-input" type="checkbox" v-model="keys.answer"
+													   :name="title" :id="title">
+												<label class="custom-control-label" :for="title"
+													   style="font-size:1.3rem;font-weight:500">Add a Halo to this
+													Name</label>
+											</div>
+											<button class="btn btn-accent mt-3 mt-3 w-100 btn-shadow btn-block px-5 mr-2 mt-3"
+
+													v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+												<i
+														class="mr-2"
+														data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]] ⟶
+											</button>
+
+										</div>
+										<div class="form-inner-area" v-if="keys.type == 'B'"
+											 style="font-size: 2rem;font-weight: 700;">
+											<h4 class="d-block h4 pr-2 pl-2 ">[[ keys.question ]]
+												<small style="display:block;color:red;" class="error"
+													   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+												</small>
+											</h4>
+											<input type="hidden" v-model="keys.answer" :name="title"/>
+											<ul v-if="!keys.show" class="list-unstyled">
+												<li>
+
+													<button type="button"
+															@click="keys.show=false;keys.answer=choice;getNextStep(count, counts, title)"
+															class="btn m-1"
+															:class="[{ 'btn-accent mt-3 mt-3': keys.answer===choice },{'btn-outline-dark':keys.answer!==choice}]"
+															v-for="choice, index in keys.answers">
+														[[ choice ]]
+													</button>
+													<button type="button" @click="keys.show=true"
+															class="btn btn-outline-dark btn-click text-center ">
+														[[ $t("messages['Wpisz dowolny text']") ]]
+													</button>
+												</li>
+											</ul>
+											<label class="d-block mt-2" style="font-size:1.1rem;font-weight:500"
+												   v-if="keys.show">[[ title ]]
+												<small style="display:bottom;color:red;" class="error"
+													   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+												</small>
+											</label>
+											<input type="text" class="form-control" v-model="keys.answer"
+												   :name="title"
+												   v-validate="'required'" autocomplete="off" :placeholder="keys.help_text"
+												   :maxlength="keys.maxlength" autocomplete="off"
+												   v-if="keys.show"/>
+											<small v-if="keys.maxlength<100 && keys.show">([[ $t("messages['Maksymalnie']") ]] [[ keys.maxlength || 10 ]] [[ $t("messages['Liter']") ]])
+											</small>
+
+											<button class="btn btn-accent mt-3 mt-3 btn-shadow btn-block px-5 shadow mr-2 mt-5"
+
+													v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping"
+													style="height: 75px;color: #fff;display: block;font-size: 24px;font-weight: 500;border-radius: 5px;text-align: center;background-color: #6b59d3;border: 0;cursor: pointer;">
+												<i class="mr-2" data-feather="shopping-cart"></i>Next Step 👉
+											</button>
+
+										</div>
+										<div class="form-inner-area" v-if="keys.type == 'P'"
+											 style="font-size: 2rem;font-weight: 700;">
+											<h2 class="d-block h5 pr-2 pl-2 ">Czy chcesz spersonalizować środkowy tekst na
+												koszulce?
+												<small style="display:block;color:red;" class="error"
+													   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+												</small>
+											</h2>
+											<ul style="list-style: none;padding-left:0">
+												<li>
+													<button type="button"
+															@click="keys.show=false;getNextStep(count, counts, title)"
+															class="btn btn-lg btn-click  btn-outline-dark text-center w-100"
+															v-if="isMobile">[[ $t("messages['Zostaw jako']") ]] [[keys.answer]]
+													</button>
+													<button type="button"
+															@click="keys.show=false;getNextStep(count, counts, title)"
+															class="btn btn-lg btn-click text-center w-100"
+															:class="[keys.show ? 'btn-outline-dark' : 'btn-accent mt-3 mt-3']"
+															v-else>Zostaw
+														jako [[keys.answer]]
+													</button>
+
+													<button type="button" @click="keys.show=true"
+															class="mt-2 btn btn-lg btn-click text-center btn-outline-dark   w-100"
+															v-if="isMobile">[[ $t("messages['Chcę zmienić tekst']") ]]
+													</button>
+													<button type="button" @click="keys.show=true"
+															class="mt-2 btn btn-lg btn-click text-center   w-100"
+															:class="[keys.show ? 'btn-accent mt-3 mt-3' : 'btn-outline-dark']"
+															v-else>Chcę
+														zmienić tekst
+													</button>
+
+												</li>
+											</ul>
+											<label class="d-block mt-2" style="font-size:1.3rem;font-weight:500"
+												   v-if="keys.show">[[ title ]]
+												<small style="display:bottom;color:red;" class="error"
+													   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+												</small>
+											</label>
+											<input type="text" class="form-control" v-model="keys.answer" :name="title"
+												   v-validate="'required'" :placeholder="keys.help_text"
+												   :maxlength="keys.maxlength" autocomplete="off" v-if="keys.show"/>
+											<small v-if="keys.maxlength<100 && keys.show">[[ $t("messages['Maksymalnie']") ]] [[ keys.maxlength ]]
+												[[ $t("messages['Liter']") ]]
+											</small>
+
+											<button class="btn btn-accent mt-3 mt-3 w-100 btn-block px-5 mr-2 mt-3"
+
+													v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+												<i
+														class="mr-2"
+														data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]] ⟶
+											</button>
+
+										</div>
+										<div class="form-inner-area" v-if="keys.type == 'F'">
+
+											<section id="hida">
+												<label class="d-block" style="font-size:1.3rem;font-weight:500">
+													[[ $t("messages['Ile osób chcesz na swoim projekcie?']") ]]:												<small style="display:block;color:red;" class="error"
+																																									   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+												</small>
+												</label>
+												<button type="button"
+														style="background:white!important;height: 40px;width: 100px;color: #6b59d3;font-size: 24px;font-weight: 500;border-radius: 5px;text-align: center;border: 2px solid #6b59d3!important;margin: 5px;cursor: pointer;"
+														v-for="index in 6" :key="index"
+														@click="setTodoList(index, keys);$('#hida').addClass('d-none');$('#hidea').removeClass('d-none');gtag('config', '{{ store.google_tracking_id }}', {'page_path': '/{{ object.slug }}?step=personalizing'})"
+														v-if="Object.entries(keys.answer).length === 0">[[index]]
+												</button>
+												<button type="button"
+														style="background:white!important;height: 40px;width: 250px;color: #6b59d3;font-size: 24px;font-weight: 500;border-radius: 5px;text-align: center;border: 2px solid #6b59d3!important;margin: 5px;cursor: pointer;"
+														@click="$('#hida').addClass('d-none');$('#hiddent').removeClass('d-none');$('#hiddnet').removeClass('d-none');gtag('config', '{{ store.google_tracking_id }}', {'page_path': '/{{ object.slug }}?step=personalizing'})"
+														v-if="Object.entries(keys.answer).length === 0">[[ $t("messages['Więcej niż 6']") ]]
+												</button>
+											</section>
+											<input type="hidden" v-model="keys.answer" v-validate="'required'"
+												   :name="title"/>
+
+											<section id="hiddent" class="d-none">
+												<section id="hiddnet" class="d-none">
+													<p class="d-block mb-0"><b>Wpisz nazwę i kliknij „Zatwierdź Osobę”, aby
+														dodać więcej.</b></p>
+												</section>
+												<input type="text" class="form-control" v-model="keys.stored_answer"
+													   :placeholder="keys.help_text"
+													   :maxlength="keys.maxlength" autocomplete="off"
+													   @keyup.enter="addTodo(keys)"/>
+												<button class="btn btn-success btn-shadow btn-block mb-5"
+														@click="addTodo(keys)"
+														:disabled="!keys.stored_answer">[[ $t("messages['Zapisz']") ]]
+												</button>
+											</section>
+
+											<h4 id="hidea" class="mb-3 d-none">[[ $t("messages['Proszę wypełnić imiona poniżej']") ]]</h4>
+											<ul class="list-group" v-if="Object.entries(keys.answer).length > 0">
+
+												<li class="list-group-item" v-for="key, value in keys.answer">
+													<section class="d-flex">
+														<input v-model="keys.answer[value]" class="form-control"
+															   style="width:90%" :maxlength="keys.maxlength"
+															   autocomplete="off"
+															   type="text" :name="value" v-validate="'required'"
+															   placeholder="{% translater 'Wpisz imię' store.default_color %}"/>
+														<span @click="removeTodo(keys.answer, value)" class="float-right"><i
+																class="ri-close-circle-fill"></i></span>
+													</section>
+													<small style="display:block;color:red;" class="error"
+														   v-if="errors.has(value)">[[ $t("messages['To pole jest wymagane']") ]] </small>
+												</li>
+											</ul>
+											<btn type="button" v-if="Object.entries(keys.answer).length > 0 && !hiddenat"
+												 @click="$('#hiddenat').removeClass('d-none');hiddenat=true;"
+												 class="mt-3 btn btn-sm btn-outline-info">[[ $t("messages['[+] Dodaj osobę']") ]]</btn>
+											<section id="hiddenat" class="d-none">
+
+												<p class="d-block mb-0"><b>[[ $t("messages['Wpisz nazwę i kliknij Zapisz']") ]]</b></p>
+
+
+												<input type="text" class="form-control" v-model="keys.stored_answer"
+													   :placeholder="keys.help_text"
+													   :maxlength="keys.maxlength" autocomplete="off"
+													   @keyup.enter="addTodo(keys);$('#hiddenat').addClass('d-none');hiddenat=false;"/>
+												<button class="btn btn-success btn-shadow btn-block mb-5"
+														@click="addTodo(keys);$('#hiddenat').addClass('d-none');hiddenat=false;"
+														:disabled="!keys.stored_answer">[[ $t("messages['Zapisz']") ]]
+												</button>
+											</section>
+
+
+										</div>
+										<div class="form-group mb-1" v-if="keys.type == 'T'">
+											<h6 class="d-block" style="font-size:1.3rem;font-weight:500">[[ keys.question ]]
+												<small style="display:block;color:red;" class="error"
+													   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+												</small>
+											</h6>
+											<input type="text" class="form-control" v-model="keys.answer" :name="title"
+												   v-validate="'required'" :maxlength="keys.maxlength || 10"
+												   :placeholder="keys.help_text" autocomplete="off"/>
+											<small> ([[ $t("messages['Maksymalnie']") ]] [[ keys.maxlength || 10 ]] [[ $t("messages['Liter']") ]])</small>
+											<button class="btn btn-accent mt-3 mt-3 w-100 btn-shadow btn-block px-5 mr-2 mt-3"
+													@click="getNextStep(count, counts, 'true')"
+													v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+												<i
+														class="mr-2"
+														data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]] ⟶
+											</button>
+
+										</div>
+										<div class="form-group mb-1" v-if="keys.type == 'R'">
+											<h6 class="d-block" style="font-size:1.3rem;font-weight:500">[[ keys.question ]]
+												<small style="display:block;color:red;" class="error"
+													   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+												</small>
+											</h6>
+											<div class="custom-control custom-option custom-control-inline mb-2"
+												 v-for="answer, count in keys.answers">
+												<input class="custom-control-input" type="radio" :name="title"
+													   v-model="keys.answer" v-validate="'required'" v-bind:value="count"
+													   :id="title+'-'+count"
+													   @change="pushChange(keys);getNextStep(count, counts, 'true')">
+												<label class="custom-option-label" :for="title+'-'+count"
+													   style="background:white;  "> [[ count ]] </label>
+											</div>
+											<button class="btn shadow btn-accent mt-3 mt-3 btn-shadow btn-block px-5 mr-2 mt-3"
+
+													v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+												<i
+														class="mr-2"
+														data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]] ⟶
+											</button>
+										</div>
+										<div class="form-group mb-1" v-if="keys.type == 'E'">
+											<h6 class="d-block" style="font-size:1.3rem;font-weight:500">[[ keys.question ]]
+												<small style="display:block;color:red;" class="error"
+													   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+												</small>
+											</h6>
+											<div class="custom-control custom-option custom-control-inline mb-2"
+												 v-for="answer, count in keys.answers">
+												<input class="custom-control-input" type="radio" :name="title"
+													   v-model="keys.answer" v-validate="'required'" v-bind:value="count"
+													   :id="title+'-'+count"
+													   @change="pushChange(keys);getNextStep(count, counts, 'true')">
+												<label class="custom-option-label" :for="title+'-'+count"
+													   style="background:white;  "> [[ count ]] </label>
+											</div>
+											<button class="btn shadow btn-accent mt-3 mt-3 btn-shadow btn-block px-5 mr-2 mt-3"
+
+													v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+												<i
+														class="mr-2"
+														data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]] ⟶
+											</button>
+										</div>
+
+										<div class="form-group mb-1" v-if="keys.type == 'S'">
+											<h6 class="d-block" style="font-size:1.3rem;font-weight:500">[[ keys.question ]]
+												<small style="display:block;color:red;" class="error"
+													   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+												</small>
+											</h6>
+											<select class="form-control form-select" id="select-input"
+													v-model="keys.answer" v-validate.continues="'required'" :name="title">
+												<option value="" disabled selected>[[ $t("messages['Wybierz Opcje']") ]]</option>
+												<option v-for="answer, count in keys.answers" v-bind:value="count">[[ answer.title ]]
+												</option>
+											</select>
+
+											<button class="btn btn-accent mt-3 mt-3 w-100 btn-block px-5 mr-2 mt-3"
+
+													v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+												<i
+														class="mr-2"
+														data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]] ⟶
+											</button>
+										</div>
+										<div class="form-group mb-1" v-if="keys.type == 'I'">
+											<h6 class="d-block" style="font-size:1.3rem;font-weight:500">[[ keys.question ]]
+												<small style="display:block;color:red;" class="error"
+													   v-if="errors.has('selection-'+keys.question+keys.questiongroup)">To pole jest wymagane
+												</small>
+											</h6>
+											<div class="radio-tile-group" style="justify-content: left;display: -webkit-box;display: flex;flex-wrap: wrap;-webkit-box-pack: center;">
+												<div class="input-container" v-for="answer, count in keys.answers"
+													 style="position: relative;height: 75px;width: 75px;margin: 0.5rem;">
+													<input id="walk" class="radio-button" type="radio" :value="count"
+														   v-model="keys.answer"
+														   :name="'selection-'+keys.question+keys.questiongroup"
+														   v-validate="'required'"
+														   style="opacity: 0;position: absolute;top: 0;left: 0;height: 100%;width: 100%;margin: 0;cursor: pointer;"/>
+													<div class="radio-tile"
+														 :class="[{ 'radio-selected': keys.answer===count }]"
+														 style="height:auto!important;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #a4a4a4;
+    -webkit-transition: -webkit-transform 300ms ease;
+    transition: -webkit-transform 300ms ease;
+    transition: transform 300ms ease;
+    transition: transform 300ms ease, -webkit-transform 300ms ease;
+}">
+														<img :src="answer.image"
+															 style="max-width:95%;height:auto;margin:auto"/>
+													</div>
+
+												</div>
+											</div>
+											<button class="btn shadow btn-accent mt-3 mt-3 btn-shadow btn-block px-5 mr-2" @click="getNextStep(count, counts, 'true')"
+													v-if="isMobile() && isLastStep!=getLastStep && counts==getLastGrouping">
+												<i class="mr-2" data-feather="shopping-cart"></i>[[ $t("messages['Następny']") ]]
+											</button>
+
+										</div>
+										<div class="form-group mb-1" v-if="keys.type == 'W'">
+											<h6 class="d-block">[[ keys.question ]]</h6>
+											<small style="display:block;color:red;" class="error"
+												   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+											</small>
+											</label>
+											<select class="form-control form-select" id="select-input"
+													v-model="keys.selection">
+
+												<option v-for="answer, count in keys.answers" v-bind:value="answer"
+														:name="title" v-validate="'required'">[[ count]]
+												</option>
+											</select>
+											<div v-if="keys.selection">
+												[[ keys.selection.answers ]]
+												<h7 class="d-block">[[ keys.selection.title ]]
+													<small style="display:block;color:red;" class="error"
+														   v-if="errors.has(keys.selection)">[[ $t("messages['To pole jest wymagane']") ]]
+													</small>
+												</h7>
+												<select class="form-control form-select" id="select-input"
+														v-model="keys.answer">
+													<option v-for="answer, count in keys.selection.answers"
+															v-bind:value="count" :name="keys.selection"
+															v-validate="'required'">[[ answer.title ]]
+													</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group mb-1" v-if="keys.type == 'V'">
+											<input type="hidden" v-model="keys.answer"  v-validate="'required'" :name="'selection-'+keys.question+keys.questiongroup"/>
+											<h6 class="d-block">[[ keys.question ]]
+												<small style="display:block;color:red;" class="error"
+													   v-if="errors.has('selection-'+keys.question+keys.questiongroup) && !keys.answer">[[ $t("messages['To pole jest wymagane']") ]]
+												</small>
+
+											</h6>
+											<div class="radio-tile-group"
+												 style="justify-content: left;display: -webkit-box;display: flex;flex-wrap: wrap;-webkit-box-pack: center;">
+												<div class="input-container" v-for="answer, index in keys.answers"
+													 style="position: relative;height: 50px;width: 50px;margin: 0.5rem;">
+													<section v-if="answer.answers">
+														<input id="walk" class="radio-button" type="radio" :value="answer"
+															   @click="keys.answer =''" v-model="keys.selection"
+															   :name="'selector-'+keys.title"
+															   style="opacity: 0;position: absolute;top: 0px;left: 0px;height: 100%;width: 100%;margin: 0px;cursor: pointer;"/>
+														<div class="radio-tile"
+															 :class="[{ 'radio-selected': keys.selection===answer }]"
+															 style="height:auto!important;display: flex;-webkit-box-orient: vertical;-webkit-box-direction: normal;flex-direction: column;-webkit-box-align: center;align-items: center;-webkit-box-pack: center;justify-content: center;width: 100%;height: 100%;border: 1px solid #a4a4a4;-webkit-transition: -webkit-transform 300ms ease;transition: -webkit-transform 300ms ease;">
+															<img :src="answer.image"
+																 style="max-width:95%;height:auto;margin:auto"/>
+														</div>
+													</section>
+													<section v-else>
+														<input id="walk" class="radio-button" type="radio" :value="index"
+															   v-model="keys.answer"
+															   :name="'selection-'+keys.question+keys.questiongroup"
+															   @click="keys.selection = '';"
+															   style="opacity: 0;position: absolute;top: 0;left: 0;height: 100%;width: 100%;margin: 0;cursor: pointer;"/>
+														<div class="radio-tile"
+															 :class="[{ 'radio-selected': keys.answer === index }]"
+															 style="height:auto!important;display: flex;-webkit-box-orient: vertical;-webkit-box-direction: normal;flex-direction: column;-webkit-box-align: center;align-items: center;-webkit-box-pack: center;justify-content: center;width: 100%;height: 100%;border: 1px solid #a4a4a4;-webkit-transition: -webkit-transform 300ms ease;transition: -webkit-transform 300ms ease;">
+															<img :src="answer.image"
+																 style="max-width:95%;height:auto;margin:auto"/>
+														</div>
+													</section>
+
+												</div>
+
+												<div style="width:100%;display:flex;flex-wrap: wrap;" v-if="keys.selection">
+													<div class="input-container"
+														 v-for="answer, index in keys.selection.answers"
+														 style="position: relative;height: 100px;width: 100px;margin: 0.5rem;">
+														<input id="walk" class="radio-button" type="radio" :value="index"
+															   v-model="keys.answer"
+															   @change="pushChange(keys);getNextStep(count, counts, 'true')"
+															   style="opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    cursor: pointer;"/>
+														<div class="radio-tile"
+															 :class="[{ 'radio-selected': keys.answer === index }]" style="height:auto!important;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #a4a4a4;
+    -webkit-transition: -webkit-transform 300ms ease;
+    transition: -webkit-transform 300ms ease;
+    transition: transform 300ms ease;
+    transition: transform 300ms ease, -webkit-transform 300ms ease;
+}">
+															<img :src="answer.image"
+																 style="max-width:95%;height:auto;margin:auto"/>
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group mb-1" v-if="keys.type == 'C'">
+											<h6 class="d-block">[[ keys.question ]]
+												<small style="display:block;color:red;" class="error"
+													   v-if="errors.has(title)">[[ $t("messages['To pole jest wymagane']") ]]
+												</small>
+											</h6>
+
+											<croppa class="c1" v-model="myCroppa"
+													:width="300"
+													:height="300"
+													quality="4"
+													placeholder=""
+													:show-remove-button="true"
+													:prevent-white-space="true"
+													:initial-image="initial"
+													:accept="'image/*'"
+													:show-loading="true"
+													@file-size-exceed="handleFileSizeExceed"
+													@file-type-mismatch="handleFileTypeMismatch"
+													@draw="onDraw"
+													@zoom="onZoom"
+											>
+												<img slot="placeholder" src="{% static 'img/taptoupload.png' %}"/>
+											</croppa>
+											<div v-if="!imageNotSelected" class="d-none d-md-block">
+												<small>[[ $t("messages['Adjust Zoom']") ]]</small>
+												<input type="range" @input="onSliderChange" :min="sliderMin"
+													   :max="sliderMax" step=".001" v-model="sliderVal" :name="title"
+													   v-validate="'required'">
+
+											</div>
+
+											<input name="base64" id="picture" type="hidden" :value="dataUrl"
+												   v-bind:change="setPicture(keys)"/>
+										</div>
+									</div>
+								</transition-group>
+							</div>
+							<form class="pb-4 mb-100" method="POST" action="/products/{{ object.product.slug }}/context"
+								  @submit="submitForm" id="generateForm" ref="form">
+								<div class="fd-flex flex-wrap pt-1">
+									{% csrf_token %}
+									<div v-if="getLastStep==isLastStep  && isMobile()">
+										<button class="btn btn-accent mt-3 mt-3 btn-shadow btn-block px-5 shadow" type="submit">
+											<i class="mr-2" data-feather="shopping-cart"></i>
+											[[ $t("messages['Podglądnij swoją koszulkę']") ]] ⟶
+										</button>
+									</div>
+									<div v-if="!isMobile()">
+										<button class="btn btn-accent mt-3 mt-3 btn-shadow btn-block px-5 shadow" type="submit">
+											<i class="mr-2" data-feather="shopping-cart"></i>
+											[[ $t("messages['Podglądnij swoją koszulkę']") ]] ⟶
+										</button>
+									</div>
+								</div>
+
+								<input name="json" :value="inputJSON" type="hidden"/>
+								<input name="collection" value="true" type="hidden"/>
+								<input name="print" :value='selectedPrint' type="hidden" v-if="selectedPrint!=1"/>
+
+							</form>
+
+						</section>
+
+					</div>
+                    <div class="row m-auto mt-10" style="margin-top:50px!important">
+				<div class="row" style="margin-top:50px">
+					  {% if store.id == 8 or store.id == 19 %}<div class="col-12 text-center px-4 mb-3">
+						  <h6>{% translater 'Do you have a question for your order?' store.default_color %}</h6>
+						  <p style="font-size: 12px;color: black;font-weight: 100;">{% translater 'Our Customer Care is here to help!' store.default_color %}</p></div>
+					{% endif %}
+					<div class="col-4 text-center">
+						<img src="{% static 'i-shipping.png' %}" style="max-width:40px;"/>
+						<p style="font-size: 12px;color: black;font-weight: 100;">{% translater 'Dostawa w 1-2 dni' store.default_color %}</p>
+					</div>
+					<div class="col-4 text-center">
+						<img src="{% static 'i-reviews.png' %}" style="max-width:40px;"/>
+						<p style="font-size: 12px;color: black;font-weight: 100;">{% translater 'Ponad 40,000 klientow' store.default_color %}</p>
+					</div>
+					<div class="col-4 text-center">
+						<img src="{% static 'i-gift.png' %}" style="max-width:40px;"/>
+						<p style="font-size: 12px;color: black;font-weight: 100;">{% translater 'Wyjątkowy Prezent na każdą okazję' store.default_color %}</p>
+					</div>
+					</div>
+				</div>
+                <div class="w-50 m-auto w-md-50 text-center mt-5 d-md-none">
+						<a href="/"><img src="{{ store.logo.url }}" style="max-height:75px;max-width:100%" alt="{{ store}}" style="max-width:125px;"></a>
+				</div>
+					{% if store.name == "Emmano.de"  %}
+				<div class="under-atc-badge" style="width: 100%;display: flex;">
+					<div class="d-flex justify-content-between w-100 px-3 mb-3 mt-6 mt-md-0" style="">
+						<div class="bunch d-flex bg-light p-2 rounded  mr-3 w-100 bg-secondary">
+							<img src="//cdn.shopify.com/s/files/1/0576/9596/1249/t/18/assets/Free_Delivery_Icon.png?v=93785781731047290871651136281" class="diffrentimg png-image" style="max-height: 25px;">
+			<span>Kostenloser Versand</span>
+						</div>
+						<div class="bunch d-flex bg-light rounded p-2 w-100">
+							<img src="//cdn.shopify.com/s/files/1/0576/9596/1249/t/18/assets/iconavantage_a.svg?v=111774205848938353861648109378" class="diffrentimg" style="max-height: 25px;">
+							<span>Kostenlose Personalisierung</span>
+						</div>
+					</div>
+				</div>
+					{% endif %}
+				</div>
+			</div>
+		</section>
+	</main>
+
+{% endblock %}
+{% if store.name == "Emmano.hu" %}
+{% block footer %}
+{% endblock %}
+{% endif %}
+{% block vue %}
+	<script>
+        function getCookie(e) {
+            var o = null;
+            if (document.cookie && "" !== document.cookie) for (var t = document.cookie.split(";"), n = 0; n < t.length; n++) {
+                var r = t[n].trim();
+                if (r.substring(0, e.length + 1) === e + "=") {
+                    o = decodeURIComponent(r.substring(e.length + 1));
+                    break
+                }
+            }
+            return o
+        }
+
+        var csrftoken = getCookie("csrftoken");
+	</script>
+	<script>
+        Vue.use(Croppa);
+        Vue.use(VeeValidate);
+        i18n.locale = '{{ store.default_color }}'
+        var app = new Vue({
+            i18n,
+            el: '#products',
+            delimiters: ['[[', ']]'],
+            data() {
+                return {
+                    myCroppa: {},
+                    dataUrl: null,
+                    printog:{% if request.GET.printid %}false{% else %}true{% endif %},
+                    imageNotSelected: true,
+                    sliderVal: 0,
+                    step: '0|0',
+                    sliderMin: 0,
+                    {% if not request.GET.printid %}
+                        prints: {"design_choices": ["base_design"], "selected_design": "base_design", "designs": {"base_design": {"prints": {"Koszulka Damska": {"id": 21, "selected_color": "Bia\u0142a", "selected_size": "S", "size_chart": "S - Klatka piersiowa: 43.8cm; D\u0142ugo\u015b\u0107: 64.7cm; D\u0142ugo\u015b\u0107 r\u0119kawa: 33.6cm\r\n<br>\r\nM - Klatka piersiowa: 48.8cm; D\u0142ugo\u015b\u0107: 66cm; D\u0142ugo\u015b\u0107 r\u0119kawa: 35.5cm\r\n<br>\r\nL - Klatka piersiowa: 53.9cm; D\u0142ugo\u015b\u0107: 68.5cm; D\u0142ugo\u015b\u0107 r\u0119kawa: 37.4cm\r\n<br>\r\nXL - Klatka piersiowa: 59cm; D\u0142ugo\u015b\u0107: 71.1cm; D\u0142ugo\u015b\u0107 r\u0119kawa: 40cm\r\n<br>\r\nXXL - Klatka piersiowa: 64cm; D\u0142ugo\u015b\u0107: 72.3cm; D\u0142ugo\u015b\u0107 r\u0119kawa: 42.5cm", "colors": {"Bia\u0142a": {"S": {"id": 958, "title": "S", "short": "S", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup.jpg", "is_jewelry": false, "design_1_x": 329, "design_1_y": 397, "design_1_w": 1100, "design_1_h": 1100, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/white.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "M": {"id": 959, "title": "M", "short": "M", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup.jpg", "is_jewelry": false, "design_1_x": 329, "design_1_y": 397, "design_1_w": 1100, "design_1_h": 1100, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/white.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "L": {"id": 960, "title": "L", "short": "L", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup.jpg", "is_jewelry": false, "design_1_x": 329, "design_1_y": 397, "design_1_w": 1100, "design_1_h": 1100, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/white.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "XL": {"id": 961, "title": "XL", "short": "XL", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup.jpg", "is_jewelry": false, "design_1_x": 329, "design_1_y": 397, "design_1_w": 1100, "design_1_h": 1100, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/white.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "XXL": {"id": 962, "title": "XXL", "short": "XXL", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup.jpg", "is_jewelry": false, "design_1_x": 329, "design_1_y": 397, "design_1_w": 1100, "design_1_h": 1100, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/white.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}}}, "short": "Koszulka Damska", "category": "koszulk", "details": "<p>Koszulka Damska Softstyle T- Shirt Gildan</p>\r\n<ul><li> Jersey\r\n</li><li> Dekatyzowana \r\n</li><li> Metka TearAway \r\n</li><li> Ta\u015bma wzmacniaj\u0105ca na karku i ramionach \r\n</li><li> Dekolt z dzianiny pr\u0105\u017ckowanej (1,3 cm)\r\n</li><li> Mankiety r\u0119kaw\u00f3w i d\u00f3\u0142 koszulki wyko\u0144czony podw\u00f3jnymi szwami\r\n</li><li> Szwy boczne \r\n</li><li> 100% bawe\u0142na\r\n<ul><li>  Gramatura: 141 g<i>m\u00b2, 150 g</i>m\u00b2</li></ul>\r\n</li></ul>", "icon": "/media/printable/icon/i-shirt_HKeVyPr.png", "price_adjustment": 0.0, "price_was": 69.9, "price": 49.0}, "Meska": {"id": 34, "selected_color": "Bia\u0142a", "selected_size": "S", "size_chart": "", "colors": {"Bia\u0142a": {"S": {"id": 1013, "title": "S", "short": "S", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup-men.jpg", "is_jewelry": false, "design_1_x": 240, "design_1_y": 240, "design_1_w": 690, "design_1_h": 690, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "M": {"id": 1014, "title": "M", "short": "M", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup-men.jpg", "is_jewelry": false, "design_1_x": 240, "design_1_y": 240, "design_1_w": 690, "design_1_h": 690, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "L": {"id": 1015, "title": "L", "short": "L", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup-men.jpg", "is_jewelry": false, "design_1_x": 240, "design_1_y": 240, "design_1_w": 690, "design_1_h": 690, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "XL": {"id": 1016, "title": "XL", "short": "XL", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup-men.jpg", "is_jewelry": false, "design_1_x": 240, "design_1_y": 240, "design_1_w": 690, "design_1_h": 690, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "XXL": {"id": 1017, "title": "XXL", "short": "XXL", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup-men.jpg", "is_jewelry": false, "design_1_x": 240, "design_1_y": 240, "design_1_w": 690, "design_1_h": 690, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "3XL": {"id": 1035, "title": "3XL", "short": "3XL", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "4XL": {"id": 1036, "title": "4XL", "short": "4XL", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}}}, "short": "Koszulka M\u0119ska", "category": null, "details": "", "icon": "/media/printable/icon/i-shirt_j2FSs92.png", "price_adjustment": 0.0, "price_was": 69.9, "price": 49.0}, "Koszulka dziecieca": {"id": 33, "selected_color": "Bia\u0142a", "selected_size": "104", "size_chart": "", "colors": {"Bia\u0142a": {"104": {"id": 1007, "title": "104", "short": "104", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/youth-holiday.jpg", "is_jewelry": false, "design_1_x": 293, "design_1_y": 270, "design_1_w": 653, "design_1_h": 650, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/toddler.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "116": {"id": 1008, "title": "116", "short": "116", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/youth-holiday.jpg", "is_jewelry": false, "design_1_x": 293, "design_1_y": 270, "design_1_w": 653, "design_1_h": 650, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/toddler.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "128": {"id": 1009, "title": "128", "short": "128", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/youth-holiday.jpg", "is_jewelry": false, "design_1_x": 293, "design_1_y": 270, "design_1_w": 653, "design_1_h": 650, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/toddler.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "140": {"id": 1010, "title": "140", "short": "140", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/youth-holiday.jpg", "is_jewelry": false, "design_1_x": 293, "design_1_y": 270, "design_1_w": 653, "design_1_h": 650, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/toddler.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "152": {"id": 1011, "title": "152", "short": "152", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/youth-holiday.jpg", "is_jewelry": false, "design_1_x": 293, "design_1_y": 270, "design_1_w": 653, "design_1_h": 650, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/toddler.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "164": {"id": 1012, "title": "164", "short": "164", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/youth-holiday.jpg", "is_jewelry": false, "design_1_x": 293, "design_1_y": 270, "design_1_w": 653, "design_1_h": 650, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/toddler.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}}}, "short": "Koszulka Dzieci\u0119ca", "category": "koszulk", "details": "", "icon": "/media/printable/icon/i-shirt_h5D4H9y.png", "price_adjustment": 0.0, "price_was": 69.9, "price": 49.0}, "Body Dl. Rek": {"id": 35, "selected_color": "Bia\u0142y", "selected_size": "56", "size_chart": "", "colors": {"Bia\u0142y": {"56": {"id": 1018, "title": "56", "short": "56", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "62": {"id": 1019, "title": "62", "short": "62", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "68": {"id": 1020, "title": "68", "short": "68", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "74": {"id": 1021, "title": "74", "short": "74", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "80": {"id": 1022, "title": "80", "short": "80", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "86": {"id": 1023, "title": "86", "short": "86", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "92": {"id": 1024, "title": "92", "short": "92", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "98": {"id": 1025, "title": "98", "short": "98", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "104": {"id": 1026, "title": "104", "short": "104", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "110": {"id": 1027, "title": "110", "short": "110", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}}}, "short": "Body d\u0142ugi r\u0119kaw", "category": null, "details": "", "icon": "/media/printable/icon/i-shirt_6dPwRtd.png", "price_adjustment": 0.0, "price_was": 69.9, "price": 49.0}}, "selected_print": "Koszulka Damska"}}},
+                    {% else %}
+                        prints: {% get_single_po object.product request.GET.printid as result %}{{ result|safe }},
+                    {% endif %}
+                    all_prints: {"design_choices": ["base_design"], "selected_design": "base_design", "designs": {"base_design": {"prints": {"Koszulka Damska": {"id": 21, "selected_color": "Bia\u0142a", "selected_size": "S", "size_chart": "S - Klatka piersiowa: 43.8cm; D\u0142ugo\u015b\u0107: 64.7cm; D\u0142ugo\u015b\u0107 r\u0119kawa: 33.6cm\r\n<br>\r\nM - Klatka piersiowa: 48.8cm; D\u0142ugo\u015b\u0107: 66cm; D\u0142ugo\u015b\u0107 r\u0119kawa: 35.5cm\r\n<br>\r\nL - Klatka piersiowa: 53.9cm; D\u0142ugo\u015b\u0107: 68.5cm; D\u0142ugo\u015b\u0107 r\u0119kawa: 37.4cm\r\n<br>\r\nXL - Klatka piersiowa: 59cm; D\u0142ugo\u015b\u0107: 71.1cm; D\u0142ugo\u015b\u0107 r\u0119kawa: 40cm\r\n<br>\r\nXXL - Klatka piersiowa: 64cm; D\u0142ugo\u015b\u0107: 72.3cm; D\u0142ugo\u015b\u0107 r\u0119kawa: 42.5cm", "colors": {"Bia\u0142a": {"S": {"id": 958, "title": "S", "short": "S", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup.jpg", "is_jewelry": false, "design_1_x": 329, "design_1_y": 397, "design_1_w": 1100, "design_1_h": 1100, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/white.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "M": {"id": 959, "title": "M", "short": "M", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup.jpg", "is_jewelry": false, "design_1_x": 329, "design_1_y": 397, "design_1_w": 1100, "design_1_h": 1100, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/white.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "L": {"id": 960, "title": "L", "short": "L", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup.jpg", "is_jewelry": false, "design_1_x": 329, "design_1_y": 397, "design_1_w": 1100, "design_1_h": 1100, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/white.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "XL": {"id": 961, "title": "XL", "short": "XL", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup.jpg", "is_jewelry": false, "design_1_x": 329, "design_1_y": 397, "design_1_w": 1100, "design_1_h": 1100, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/white.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "XXL": {"id": 962, "title": "XXL", "short": "XXL", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup.jpg", "is_jewelry": false, "design_1_x": 329, "design_1_y": 397, "design_1_w": 1100, "design_1_h": 1100, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/white.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}}}, "short": "Koszulka Damska", "category": "koszulk", "details": "<p>Koszulka Damska Softstyle T- Shirt Gildan</p>\r\n<ul><li> Jersey\r\n</li><li> Dekatyzowana \r\n</li><li> Metka TearAway \r\n</li><li> Ta\u015bma wzmacniaj\u0105ca na karku i ramionach \r\n</li><li> Dekolt z dzianiny pr\u0105\u017ckowanej (1,3 cm)\r\n</li><li> Mankiety r\u0119kaw\u00f3w i d\u00f3\u0142 koszulki wyko\u0144czony podw\u00f3jnymi szwami\r\n</li><li> Szwy boczne \r\n</li><li> 100% bawe\u0142na\r\n<ul><li>  Gramatura: 141 g<i>m\u00b2, 150 g</i>m\u00b2</li></ul>\r\n</li></ul>", "icon": "/media/printable/icon/i-shirt_HKeVyPr.png", "price_adjustment": 0.0, "price_was": 69.9, "price": 49.0}, "Meska": {"id": 34, "selected_color": "Bia\u0142a", "selected_size": "S", "size_chart": "", "colors": {"Bia\u0142a": {"S": {"id": 1013, "title": "S", "short": "S", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup-men.jpg", "is_jewelry": false, "design_1_x": 240, "design_1_y": 240, "design_1_w": 690, "design_1_h": 690, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "M": {"id": 1014, "title": "M", "short": "M", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup-men.jpg", "is_jewelry": false, "design_1_x": 240, "design_1_y": 240, "design_1_w": 690, "design_1_h": 690, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "L": {"id": 1015, "title": "L", "short": "L", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup-men.jpg", "is_jewelry": false, "design_1_x": 240, "design_1_y": 240, "design_1_w": 690, "design_1_h": 690, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "XL": {"id": 1016, "title": "XL", "short": "XL", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup-men.jpg", "is_jewelry": false, "design_1_x": 240, "design_1_y": 240, "design_1_w": 690, "design_1_h": 690, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "XXL": {"id": 1017, "title": "XXL", "short": "XXL", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/mockup-men.jpg", "is_jewelry": false, "design_1_x": 240, "design_1_y": 240, "design_1_w": 690, "design_1_h": 690, "rotate_1": 0, "opacity_1": 1.0, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 1.0, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 1.0, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "3XL": {"id": 1035, "title": "3XL", "short": "3XL", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "4XL": {"id": 1036, "title": "4XL", "short": "4XL", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [], "thumb": "/media/printable/mockup/fireworks-dark.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}}}, "short": "Koszulka M\u0119ska", "category": null, "details": "", "icon": "/media/printable/icon/i-shirt_j2FSs92.png", "price_adjustment": 0.0, "price_was": 69.9, "price": 49.0}, "Koszulka dziecieca": {"id": 33, "selected_color": "Bia\u0142a", "selected_size": "104", "size_chart": "", "colors": {"Bia\u0142a": {"104": {"id": 1007, "title": "104", "short": "104", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/youth-holiday.jpg", "is_jewelry": false, "design_1_x": 293, "design_1_y": 270, "design_1_w": 653, "design_1_h": 650, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/toddler.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "116": {"id": 1008, "title": "116", "short": "116", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/youth-holiday.jpg", "is_jewelry": false, "design_1_x": 293, "design_1_y": 270, "design_1_w": 653, "design_1_h": 650, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/toddler.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "128": {"id": 1009, "title": "128", "short": "128", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/youth-holiday.jpg", "is_jewelry": false, "design_1_x": 293, "design_1_y": 270, "design_1_w": 653, "design_1_h": 650, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/toddler.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "140": {"id": 1010, "title": "140", "short": "140", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/youth-holiday.jpg", "is_jewelry": false, "design_1_x": 293, "design_1_y": 270, "design_1_w": 653, "design_1_h": 650, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/toddler.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "152": {"id": 1011, "title": "152", "short": "152", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/youth-holiday.jpg", "is_jewelry": false, "design_1_x": 293, "design_1_y": 270, "design_1_w": 653, "design_1_h": 650, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/toddler.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "164": {"id": 1012, "title": "164", "short": "164", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/youth-holiday.jpg", "is_jewelry": false, "design_1_x": 293, "design_1_y": 270, "design_1_w": 653, "design_1_h": 650, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/toddler.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}}}, "short": "Koszulka Dzieci\u0119ca", "category": "koszulk", "details": "", "icon": "/media/printable/icon/i-shirt_h5D4H9y.png", "price_adjustment": 0.0, "price_was": 69.9, "price": 49.0}, "Body Dl. Rek": {"id": 35, "selected_color": "Bia\u0142y", "selected_size": "56", "size_chart": "", "colors": {"Bia\u0142y": {"56": {"id": 1018, "title": "56", "short": "56", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "62": {"id": 1019, "title": "62", "short": "62", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "68": {"id": 1020, "title": "68", "short": "68", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "74": {"id": 1021, "title": "74", "short": "74", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "80": {"id": 1022, "title": "80", "short": "80", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "86": {"id": 1023, "title": "86", "short": "86", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "92": {"id": 1024, "title": "92", "short": "92", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "98": {"id": 1025, "title": "98", "short": "98", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "104": {"id": 1026, "title": "104", "short": "104", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}, "110": {"id": 1027, "title": "110", "short": "110", "active": true, "price": 49.0, "price_was": 69.9, "mockups": [{"image": "/media/printable/mockup/holiday-long-onesie.jpg", "is_jewelry": false, "design_1_x": 318, "design_1_y": 222, "design_1_w": 531, "design_1_h": 531, "rotate_1": 0, "opacity_1": 0.9, "design_2_x": 0, "design_2_y": 0, "design_2_w": 0, "design_2_h": 0, "rotate_2": 0, "opacity_2": 0.9, "design_3_x": 0, "design_3_y": 0, "design_3_w": 0, "design_3_h": 0, "rotate_3": 0, "opacity_3": 0.9, "design_4_x": 0, "design_4_y": 0, "design_4_w": 0, "design_4_h": 0, "rotate_4": 0, "opacity_4": 0.9}], "thumb": "/media/printable/mockup/holiday-long-onesie.jpg", "thumb_x": 0, "thumb_y": 0, "thumb_w": 1200, "thumb_h": 1200}}}, "short": "Body d\u0142ugi r\u0119kaw", "category": null, "details": "", "icon": "/media/printable/icon/i-shirt_6dPwRtd.png", "price_adjustment": 0.0, "price_was": 69.9, "price": 49.0}}, "selected_print": "Koszulka Damska"}}},
+                    hiddenat: false,
+                    img_base: '',
+                    cart: '',
+                    qty: 1,
+                    sliderMax: 0,
+                    canvasSize: 600,
+                    show_alt:true,
+                    percent: 0,
+                    editting: true,
+                    background: '',
+                    color: '',
+                    preload: '',
+                    added: '',
+                    initial: null,
+                    question_group: {% if object.product.get_or_create_group_json %}{{ object.product.get_or_create_group_json|safe }}{% else %}''{% endif %},
+                    showing: -1,
+                    question_set: {% if object.product.get_or_create_json %}{{ object.product.get_or_create_json|safe }}{% else %}''{% endif %},
+                    stored_data: '',
+                }
+            },
+            mounted: function () {
+                if (this.stored_data) {
+                    if ("color" in this.stored_data) {
+                        this.color = this.stored_data['color']
+                        $('#txtclor').attr('color', this.color.replace('\(', '').replace('\)', '').replace(' ', ''))
+
+                    }
+                    if ("background" in this.stored_data) {
+                        this.background = this.stored_data['background']
+                        $('#bgcolor').attr('color', this.background.replace('\(', '').replace('\)', '').replace(' ', ''))
+                    }
+                    for (var key in this.question_set) {
+
+                        for (value in this.question_set[key]["attributes"]) {
+
+                            this.question_set[key]["attributes"][value]["answer"] = this.stored_data[key]["attributes"][value]
+
+                            if ("answers" in this.question_set[key]["attributes"][value]) {
+
+                                for (selector in this.question_set[key]["attributes"][value]["answers"]) {
+                                    results = this.question_set[key]["attributes"][value]["answers"][selector]
+                                    if ("answers" in results) {
+                                        if (this.stored_data[key]["attributes"][value] in
+                                            this.question_set[key]["attributes"][value]["answers"][selector]["answers"]
+                                        ) {
+                                            this.question_set[key]["attributes"][value]["selection"] = this.question_set[key]["attributes"][value]["answers"][selector]
+                                        } else {
+                                        }
+                                    }
+
+                                }
+                            }
+                            if (this.question_set[key]["attributes"][value]["type"] == "C") {
+
+                                Vue.set(this, 'initial', "/pdo/" + this.stored_data[key]["attributes"][value])
+
+                            }
+                        }
+                    }
+                }
+                if (this.preload) {
+
+                    for (var k in this.question_set) {
+
+                        if (k in this.preload) {
+
+                            for (v in this.question_set[k]["attributes"]) {
+
+                                if (v in this.preload[k]["attributes"]) {
+
+                                    this.question_set[k]["attributes"][v]["answer"] = this.preload[k]["attributes"][v]
+                                    this.question_set[k]["attributes"][v]["preload"] = true;
+                                } else {
+                                    this.question_set[k]["attributes"][v]["preload"] = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            http: {
+                headers: {
+                    'X-CSRFToken': csrftoken
+                }
+
+            },
+            methods: {
+
+                pushChange(parent){
+
+                },
+                removeTodo: function (answer, value) {
+                    Vue.delete(answer, value)
+                },
+
+                setTodoList: function (value, key) {
+                    key.answer = {}
+                    for (const x of Array(value).keys()) {
+                        console.log(x)
+                        Vue.set(key.answer, x, '')
+                    }
+                },
+                addTodo: function (key) {
+                    _key = key
+                    if (Object.keys(_key.answer).length == 0) {
+                        _key.answer = {}
+                        Vue.set(_key.answer, 1, _key.stored_answer)
+                    } else {
+                        Vue.set(_key.answer, Object.entries(_key.answer).length + 1, _key.stored_answer)
+                    }
+                    _key.stored_answer = ''
+                    $('#hiddent').addClass('d-none')
+                },
+                removeTask: function (key, index) {
+                    var index = _.findIndex(key.answer, list);
+                    key.answer.splice(index, 1);
+                },
+
+
+                getFirstGrouping(step, count) {
+                    steps = this.step.split('|')
+                    parent_list = Object.keys(this.question_set)
+                    step_list = Object.keys(this.question_set[parent_list[steps[0]]]["attributes"])
+                    var i;
+                    for (i = 0; i < step_list.length; i++) {
+                        checkStep = this.question_set[parent_list[steps[0]]]["attributes"][step_list[i]]
+                        if (checkStep['questiongroup'] === step['questiongroup']) {
+                            return count == i
+                        }
+                    }
+                    return true
+                },
+                setShowing: function (key) {
+                    this.showing = key;
+                    this.show_alt = false;
+                    this.question_set = this.question_group[key]
+                },
+                submitProductM: function (id) {
+                    var formData = new FormData(this.$refs['formm'][0]); // reference to form element
+                    var body = {}; // need to convert it before using not with XMLHttpRequest
+                    for (let [key, val] of formData.entries()) {
+                        Object.assign(body, {[key]: val})
+                    }
+
+                    $('#singleadd').text('Adding Product...')
+                    $('#singleadd').attr('disabled', true);
+                    $('#multipleadd').text('Adding Product...')
+                    $('#multipleadd').attr('disabled', true);
+                    app = this;
+                    this.$http({
+                        method: 'post',
+                        url: '/products/siostry-gwiazdy/api',
+                        body: body
+                    }).then(response => {
+                        $('#' + id).modal('hide')
+                        data = JSON.parse(response.data['checkout'])
+                        console.log(data)
+                        app.added = JSON.parse(response.data['added'])
+                        cart.cart.subtotal = data['subtotal']
+                        cart.cart = data
+                        cart.cartnote = response.data['cartnote']
+
+                        app.cart.subtotal = data['subtotal']
+                        app.cart = data
+                        app.cartnote = response.data['cartnote']
+                        $('#addedCart').modal('show');
+
+                        $('#singleadd').text('Add to Cart')
+                        $('#singleadd').attr('disabled', false);
+                        $('#multipleadd').text('Add to Cart')
+                        $('#multipleadd').attr('disabled', false);
+                    })
+
+                },
+                submitProduct: function () {
+                    var formData = new FormData(this.$refs['form'][0]); // reference to form element
+                    var body = {}; // need to convert it before using not with XMLHttpRequest
+                    for (let [key, val] of formData.entries()) {
+                        Object.assign(body, {[key]: val})
+                    }
+                    console.log(body);
+                    app = this;
+                    $('#singleadd').text('Adding Product...')
+                    $('#singleadd').attr('disabled', true);
+                    $('#multipleadd').text('Adding Product...')
+                    $('#multipleadd').attr('disabled', true);
+                    this.$http({
+                        method: 'post',
+                        url: '/products/siostry-gwiazdy/api',
+                        body: body
+                    }).then(response => {
+                        data = JSON.parse(response.data['checkout'])
+                        app.added = JSON.parse(response.data['added'])
+                        cart.cart.subtotal = data['subtotal']
+                        cart.cart = data
+                        cart.cartnote = response.data['cartnote']
+
+                        app.cart.subtotal = data['subtotal']
+                        app.cart = data
+                        app.cartnote = response.data['cartnote']
+                        $('#addedCart').modal('show');
+
+                        $('#singleadd').text('Add to Cart')
+                        $('#singleadd').attr('disabled', false);
+                        $('#multipleadd').text('Add to Cart')
+                        $('#multipleadd').attr('disabled', false);
+                    })
+
+                },
+                getDesignMockup: function (design) {
+                    return design["colors"][design.selected_color][design.selected_size]
+
+                },
+                setDesign: function (design) {
+                    this.prints["selected_design"] = design
+                },
+                setPrint: function (print) {
+                    Vue.set(this, 'prints', this.all_prints)
+                    this.printog = false;
+                    this.prints["designs"][this.getCurrentDesign]["selected_print"] = print;
+                    fbq('track', 'ChangedPrintLander')
+                    document.getElementById("picture").scrollIntoView();
+
+
+                },
+                setColor: function (color) {
+                    this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["selected_color"] = color
+                    if (this.getCurrentSize in Object.keys(this.getDesignColor)) {
+
+                    } else {
+                        this.setSize(Object.keys(this.getDesignColorSize)[0])
+                    }
+                },
+                setSize: function (size) {
+                    this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["selected_size"] = size
+                    this.setCanvas()
+                },
+                get_selected_prints: function (print) {
+                    return this.prints["designs"][print]
+                },
+                setCanvas: function () {
+
+                },
+                confirmLastStep(parent, value) {
+                    steps = parent + '|' + value
+
+                    return steps == this.isLastStep
+                },
+                showSaveButton(value, count, counts) {
+                    if (!this.isMobile()) {
+                        return false
+                    }
+                    if (!value) {
+                        return false
+                    } else {
+                        return (this.step == this.isLastStep) || (!this.isMobile())
+
+                    }
+                },
+                stepParent(value) {
+                    parent = this.step.split('|')[0]
+                    return (parent == value) || (!this.isMobile())
+                },
+
+                getStep(parent, value, step) {
+                    currentstep = this.getCurrentStep;
+                    x = this.step.split('|')
+                    if (this.isMobile()) {
+                        if (step.questiongroup === currentstep['questiongroup'] || (parent == x[0]) && (value == x[1])) {
+                            return true
+                        } else {
+                            return false
+                        }
+
+                    } else {
+                        return true;
+                    }
+
+                },
+                getNextStep(parent, value, validate) {
+
+                    this.$nextTick(function () {
+                        if (validate != 'false') {
+
+                            this.$validator.validateAll().then((result) => {
+                                if (result) {
+                                    parent_list = Object.keys(this.question_set)
+                                    step_list = Object.keys(this.question_set[parent_list[parent]]["attributes"])
+                                    if (this.step === "0|0") {
+                                        gtag('config', '{{ store.google_tracking_id }}', {'page_path': '/{{ object.slug }}?step=personalizing'})
+                                    }
+                                    if (value == step_list.length - 1) {
+                                        this.getNextParent(parent)
+                                    } else {
+                                        steps = this.step.split('|')
+                                        this.step = steps[0] + '|' + (parseInt(value) + 1)
+                                    }
+                                }
+                            }).catch((result) => {
+                            })
+                        } else {
+                            parent_list = Object.keys(this.question_set)
+                            step_list = Object.keys(this.question_set[parent_list[parent]]["attributes"])
+                            if (value == step_list.length - 1) {
+                                this.getNextParent(parent)
+                            } else {
+                                steps = this.step.split('|')
+                                this.step = steps[0] + '|' + (parseInt(value) + 1)
+                            }
+                        }
+
+                    })
+                    if (this.isMobile()) {
+                        document.getElementById("question_top").scrollIntoView();
+                    }
+
+
+                },
+
+                loader() {
+                    this.percent += 10;
+                },
+                getNextParent(parent) {
+                    parent_list = Object.keys(this.question_set)
+                    if (parent == parent_list.length - 1) {
+
+                        this.$nextTick(function () {
+                            if (this.isMobile()) {
+                                $('#modalSmall').toggle()
+                                percent = this.percent;
+                                setTimeout(() => {
+                                    this.loader();
+                                    percent = 10;
+                                }, 300);
+                                setTimeout(() => {
+                                    percent = 20;
+                                }, 400);
+                                setTimeout(() => {
+                                    percent = 30;
+                                }, 700);
+                                setTimeout(() => {
+                                    this.loader();
+                                    percent += 40;
+                                }, 1000);
+                                setTimeout(() => {
+                                    this.loader();
+                                    percent += 50;
+                                }, 8000);
+                                setTimeout(() => {
+                                    this.loader();
+                                    percent += 60;
+                                }, 10000);
+                                setTimeout(() => {
+                                    this.loader();
+                                    percent += 70;
+                                }, 13000);
+                                setTimeout(() => {
+                                    this.loader();
+                                    percent += 80;
+                                }, 16000);
+                                setTimeout(() => {
+                                    this.loader();
+                                    percent += 90;
+                                }, 18000);
+                                setTimeout(() => {
+                                    this.loader();
+                                    percent = 95;
+                                }, 20000);
+                            }
+
+                        });
+
+                    } else {
+                        steps = this.step.split('|')
+                        this.step = (parseInt(parent) + 1) + '|' + 0
+                    }
+                },
+                isMobile() {
+                    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                        return true
+                    } else {
+                        return false
+                    }
+                },
+                onSliderChange(evt) {
+                    var increment = evt.target.value
+                    this.myCroppa.scaleRatio = +increment
+                },
+                setPicture(key) {
+                    Vue.set(key, 'answer', this.dataUrl)
+                },
+                submitForm: function (e) {
+                    $('#modalSmall').modal('show')
+                    percent = this.percent;
+                    setTimeout(() => {
+                        this.loader();
+                        percent = 10;
+                    }, 300);
+                    setTimeout(() => {
+                        percent = 20;
+                    }, 400);
+                    setTimeout(() => {
+                        percent = 30;
+                    }, 700);
+                    setTimeout(() => {
+                        this.loader();
+                        percent += 40;
+                    }, 1000);
+                    setTimeout(() => {
+                        this.loader();
+                        percent += 50;
+                    }, 8000);
+                    setTimeout(() => {
+                        this.loader();
+                        percent += 60;
+                    }, 10000);
+                    setTimeout(() => {
+                        this.loader();
+                        percent += 70;
+                    }, 13000);
+                    setTimeout(() => {
+                        this.loader();
+                        percent += 80;
+                    }, 16000);
+                    setTimeout(() => {
+                        this.loader();
+                        percent += 90;
+                    }, 18000);
+                    setTimeout(() => {
+                        this.loader();
+                        percent = 95;
+                    }, 20000);
+                    this.$validator.validateAll().then((result) => {
+                        if (result) {
+                            if (!this.imageNotSelected) {
+                                this.dataUrl = this.myCroppa.generateDataUrl()
+                                this.imageSaving = true
+                                this.croppaImageMetaData = this.myCroppa.getMetadata()
+
+
+                            }
+                        }
+                    }).catch(() => {
+
+                        $('#modalSmall').modal('hide')
+                        e.preventDefault();
+                    })
+
+
+                },
+                onZoom() {
+                    // To prevent zooming out of range when using scrolling to zoom
+                    // if (this.sliderMax && this.croppa.scaleRatio >= this.sliderMax) {
+                    //   this.croppa.scaleRatio = this.sliderMax
+                    // } else if (this.sliderMin && this.croppa.scaleRatio <= this.sliderMin) {
+                    //   this.croppa.scaleRatio = this.sliderMin
+                    // }
+
+                    this.sliderVal = this.myCroppa.scaleRatio
+                },
+                updateBg: function (color) {
+                    this.background = color;
+                },
+                updateColor: function (color) {
+
+                    this.color = color;
+                },
+                setImage: function (obj) {
+                    obj = this.dataUrl
+                },
+                saveCroppedImage() {
+                    this.imageSaving = true
+                    this.croppaImageMetaData = this.myCroppa.getMetadata()
+                    let ctx = this.myCroppa.getContext()
+                    ctx.clearRect(0, 0, 600, 600);
+                    this.dataUrl = this.myCroppa.generateDataUrl()
+                    $('#picture').val(this.dataUrl);
+                    $("#picture").trigger("change");
+                    this.imageSaving = false; //this generates the dataUrl for this demo, right side 'saved' result
+                    ctx.drawImage(this.myCroppa.img, 0, 0, 600, 600)
+                    //ctx.restore()
+                    this.myCroppa.applyMetadata(this.croppaImageMetaData)
+
+                },
+                onNewImageDrawn() {
+                    this.imageNotSelected = false
+                    this.sliderVal = this.myCroppa.scaleRatio
+                    this.sliderMin = this.myCroppa.scaleRatio / 2
+                    this.sliderMax = this.myCroppa.scaleRatio * 2
+                },
+                handleFileSizeExceed() {
+                    this.imageNotSelected = true
+                },
+                handleFileTypeMismatch() {
+                    this.imageNotSelected = true
+                },
+                selectNewImage() {
+                    this.myCroppa.remove()
+                    this.imageNotSelected = true
+                    this.myCroppa.chooseFile()
+
+                },
+                onDraw(ctx) {
+                    if (!this.imageSaving) {
+                    } else {
+
+                    }
+                },
+            },
+            computed: {
+
+                getCurrentStep() {
+                    _this = this
+                    steps = this.step.split('|')
+                    parent_list = Object.keys(this.question_set)
+                    parent_list = parent_list.filter(function (item) {
+                        return Object.keys(_this.question_set[item]["attributes"]).length > 0
+                    })
+                    step_list = Object.keys(this.question_set[parent_list[steps[0]]]["attributes"])
+                    return this.question_set[parent_list[steps[0]]]["attributes"][step_list[steps[1]]]
+                },
+
+                getLastStep() {
+                    steps = this.step.split('|')
+                    last_step = this.getLastGrouping
+                    if ("questiongroup" in step) {
+                        return steps[0] + '|' + last_step
+                    } else {
+                        return steps[0] + '|' + steps[1]
+                    }
+                },
+                getLastGrouping() {
+                    step = this.getCurrentStep;
+                    last_step = 0
+                    steps = this.step.split('|')
+                    if (step) {
+                        if ("questiongroup" in step) {
+                            parent_list = Object.keys(this.question_set)
+                            step_list = Object.keys(this.question_set[parent_list[steps[0]]]["attributes"])
+                            var i;
+                            for (i = 0; i < step_list.length; i++) {
+                                checkStep = this.question_set[parent_list[steps[0]]]["attributes"][step_list[i]]
+                                if (checkStep['questiongroup'] === step['questiongroup']) {
+                                    last_step = i
+                                }
+                            }
+                            return last_step
+                        } else {
+                            return this.steps[1]
+                        }
+                    }
+                },
+
+                selectedPrint() {
+                    return this.prints["designs"]["base_design"]["prints"][this.getCurrentPrint]["id"]
+                },
+                showDesign: function () {
+                    return Object.keys(this.prints).length > 2
+                },
+
+                getAllDesign: function () {
+                    return this.all_prints["designs"][this.prints["selected_design"]]["prints"]
+                },
+                getDesign: function () {
+                    return this.prints["designs"][this.prints["selected_design"]]["prints"]
+                },
+
+                getDesignColorKey: function (key) {
+                    return this.prints["designs"][key]["prints"][this.getCurrentPrint]["colors"]
+                },
+                getDesignColor: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["colors"]
+                },
+                getDesignColorSize: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["colors"][this.getCurrentColor]
+                },
+                getCurrentItem: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["colors"][this.getCurrentColor][this.getCurrentSize]
+                },
+                getCurrentDesign: function () {
+                    return this.prints["selected_design"]
+                },
+                getCurrentPrint: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["selected_print"]
+                },
+                getCurrentPrintItem: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]
+                },
+                getCurrentColor: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["selected_color"]
+                },
+                getCurrentSize: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["selected_size"]
+                },
+                isLastStep: function () {
+                    _this = this;
+                    keys = Object.keys(_this.question_set)
+                    keys = keys.filter(function (item) {
+                        return Object.keys(_this.question_set[item]["attributes"]).length > 0
+                    })
+                    questions = Object.keys(_this.question_set[keys[keys.length - 1]]["attributes"])
+
+                    return (keys.length - 1) + '|' + (questions.length - 1)
+                },
+                stripQuestionSet: function () {
+                    _this = this
+                    qs = {};
+                    obj_keys = Object.keys(this.question_set)
+                    for (item in obj_keys) {
+                        attr = Object.keys(this.question_set[obj_keys[item]]["attributes"])
+                        qs[obj_keys[item]] = {"attributes": {}, "name": this.question_set[obj_keys[item]]["name"]}
+                        for (answer in attr) {
+                            qs[obj_keys[item]]["attributes"][attr[answer]] = this.question_set[obj_keys[item]]["attributes"][attr[answer]]["answer"]
+                        }
+                    }
+                    return qs
+                },
+                generateJSON: function () {
+                    return {
+                        "background": this.background.replace("rgb", ""),
+                        "color": this.color.replace("rgb", ""),
+                        ...this.stripQuestionSet
+                    }
+
+                },
+                inputJSON: function () {
+                    return JSON.stringify(this.generateJSON)
+                }
+            }
+        })
+	</script>
+{% endblock %}
+</body>
+</html>

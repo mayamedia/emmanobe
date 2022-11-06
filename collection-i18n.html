@@ -1,0 +1,76 @@
+{% extends store.template_path %}
+{% load static %}
+{% load store %}
+{% load compress %}
+{% load thumbnail %}
+{% load transla %}
+{% load humanize %}
+
+{% block content %}
+	<style>
+	.cBody .pricingCard {
+    background-color:#e0fffd
+    }
+	</style>
+    <section class="category">
+        <div class="container">
+            <ul class="breadcrumbs">
+                <li><a href="/">Home</a></li>
+				<li><a href="/collection/{{ object.slug }}">{{ object.name}}</a></li>
+            </ul>
+            <div class="mainText">
+                <h1>{{ object.name}}</h1>
+                <p>{{ object.description }}</p>
+            </div>
+        </div>
+    </section>
+    <!-- category-page End -->
+    <section class="categoryMain">
+        <div class="container">
+            <div class="conterText">
+                <span>{{ object.get_items.count }}</span> designs
+            </div>
+            <div class="row">
+				{% for product in object.get_items %}
+                <div class="col-4 col-lg-3">
+                    <div class="cardProduct">
+                        <div class="img-title">
+                            
+                                    
+                            <a href="/{{ product.design_url }}"><img src="{% get_media_prefix %}{{ product.get_image }}" alt=""
+                                    class="w-100"></a>
+                            <div class="productZoom" style="background:white">
+								{% if product.default_design %}
+                                <img src="{% get_media_prefix %}{{ product.default_design.image }}" alt="">
+								{% else  %}
+								{% endif %}
+                            </div>
+                        </div>
+                        <div class="cardbody">
+                            <div class="colourways">
+                                <span class="colourway"></span>
+                            </div>
+                            <a href="/{{ product.design_url }}" class="cBody">
+                                <h3>{{ product.name }}</h3>
+                                <p>{{ product.short_saying }}</p>
+                                <div class="pricingCard">
+                                    <p style="font-weight:800">Spersonalizuj już teraz!</p>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+				{% endfor %}
+			</div>
+        </div>
+    </section>
+	{% if object.long_description %}
+	<section class="row">
+	<div class="col-8">
+	{{ object.formatted_long_description|safe }}
+		</div>
+	</section>
+	{% endif %}
+
+{% endblock %}

@@ -1,0 +1,1635 @@
+{% extends store.template_path %}
+{% load static %}
+{% load store %}
+{% load compress %}
+{% load humanize %}
+{% load thumbnail %}
+{% load transla %}
+{% block content %}
+	{% if store.name == "Mila & Emma" %}
+	<div class="topbar" style="background-color: #343a40;color: white;">
+<div class="container">
+<div class="free-shipping-nav-slider-item" style="
+    display: flex;
+    justify-content: center;
+    color: white;
+">
+
+<svg width="156" height="16" viewBox="0 0 156 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="
+    margin: 10px;
+">
+<path d="M89 1H78C76.8954 1 76 1.89543 76 3V14C76 15.1046 76.8954 16 78 16H89C90.1046 16 91 15.1046 91 14V3C91 1.89543 90.1046 1 89 1Z" fill="#00B67A"></path>
+<path d="M105.25 1H94.25C93.1454 1 92.25 1.89543 92.25 3V14C92.25 15.1046 93.1454 16 94.25 16H105.25C106.355 16 107.25 15.1046 107.25 14V3C107.25 1.89543 106.355 1 105.25 1Z" fill="#00B67A"></path>
+<path d="M121.5 1H110.5C109.395 1 108.5 1.89543 108.5 3V14C108.5 15.1046 109.395 16 110.5 16H121.5C122.605 16 123.5 15.1046 123.5 14V3C123.5 1.89543 122.605 1 121.5 1Z" fill="#00B67A"></path>
+<path d="M137.75 1H126.75C125.645 1 124.75 1.89543 124.75 3V14C124.75 15.1046 125.645 16 126.75 16H137.75C138.855 16 139.75 15.1046 139.75 14V3C139.75 1.89543 138.855 1 137.75 1Z" fill="#00B67A"></path>
+<path d="M154 1H143C141.895 1 141 1.89543 141 3V14C141 15.1046 141.895 16 143 16H154C155.105 16 156 15.1046 156 14V3C156 1.89543 155.105 1 154 1Z" fill="#00B67A"></path>
+<path d="M83.5 11.1094L85.7812 10.5312L86.7344 13.4687L83.5 11.1094ZM88.75 7.3125H84.7344L83.5 3.53125L82.2656 7.3125H78.25L81.5 9.65625L80.2656 13.4375L83.5156 11.0937L85.5156 9.65625L88.75 7.3125Z" fill="white"></path>
+<path d="M99.75 11.1094L102.031 10.5312L102.984 13.4687L99.75 11.1094ZM105 7.3125H100.984L99.75 3.53125L98.5156 7.3125H94.5L97.75 9.65625L96.5156 13.4375L99.7656 11.0937L101.766 9.65625L105 7.3125Z" fill="white"></path>
+<path d="M116 11.1094L118.281 10.5312L119.234 13.4687L116 11.1094ZM121.25 7.3125H117.234L116 3.53125L114.766 7.3125H110.75L114 9.65625L112.766 13.4375L116.016 11.0937L118.016 9.65625L121.25 7.3125Z" fill="white"></path>
+<path d="M132.25 11.1094L134.531 10.5312L135.484 13.4687L132.25 11.1094ZM137.5 7.3125H133.484L132.25 3.53125L131.016 7.3125H127L130.25 9.65625L129.016 13.4375L132.266 11.0937L134.266 9.65625L137.5 7.3125Z" fill="white"></path>
+<path d="M148.5 11.1094L150.781 10.5312L151.734 13.4687L148.5 11.1094ZM153.75 7.3125H149.734L148.5 3.53125L147.266 7.3125H143.25L146.5 9.65625L145.266 13.4375L148.516 11.0937L150.516 9.65625L153.75 7.3125Z" fill="white"></path>
+<g clip-path="url(#clip0)">
+<path class="trust-pilot-svg" d="M17.3448 5.67075H24.0275V6.90152H21.3999V13.8203H19.955V6.90152H17.339V5.67075H17.3448ZM23.7421 7.91949H24.9772V9.05824H25.0005C25.0413 8.8972 25.1171 8.74192 25.2278 8.59238C25.3385 8.44285 25.4725 8.29907 25.6298 8.17829C25.7871 8.05177 25.9619 7.95399 26.1541 7.87348C26.3464 7.79871 26.5445 7.75845 26.7426 7.75845C26.8941 7.75845 27.0048 7.7642 27.063 7.76996C27.1213 7.77571 27.1796 7.78721 27.2436 7.79296V9.04673C27.1504 9.02948 27.0572 9.01798 26.9582 9.00648C26.8591 8.99497 26.7659 8.98922 26.6727 8.98922C26.4513 8.98922 26.2415 9.03523 26.0434 9.1215C25.8453 9.20777 25.6764 9.34005 25.5307 9.50684C25.3851 9.67937 25.2685 9.88642 25.1812 10.1395C25.0938 10.3925 25.053 10.6801 25.053 11.0079V13.8145H23.7362V7.91949H23.7421ZM33.2971 13.8203H32.0037V12.9978H31.9804C31.8173 13.2969 31.5784 13.5327 31.2579 13.711C30.9375 13.8893 30.6112 13.9813 30.2791 13.9813C29.4926 13.9813 28.9216 13.7915 28.572 13.4062C28.2225 13.0209 28.0477 12.44 28.0477 11.6636V7.91949H29.3644V11.537C29.3644 12.0546 29.4635 12.4227 29.6674 12.6355C29.8655 12.8483 30.151 12.9576 30.5122 12.9576C30.7918 12.9576 31.0191 12.9173 31.2055 12.8311C31.392 12.7448 31.5434 12.6355 31.6541 12.4917C31.7707 12.3537 31.8522 12.1812 31.9047 11.9856C31.9571 11.7901 31.9804 11.5773 31.9804 11.3472V7.92524H33.2971V13.8203ZM35.5403 11.9281C35.581 12.3077 35.7267 12.5723 35.9772 12.7275C36.2336 12.8771 36.5366 12.9576 36.892 12.9576C37.0143 12.9576 37.1541 12.9461 37.3114 12.9288C37.4688 12.9116 37.6202 12.8713 37.7542 12.8196C37.8941 12.7678 38.0048 12.6873 38.098 12.5838C38.1854 12.4802 38.2262 12.348 38.2203 12.1812C38.2145 12.0144 38.1504 11.8764 38.0339 11.7728C37.9174 11.6636 37.7717 11.583 37.5911 11.514C37.4105 11.4508 37.2066 11.3932 36.9735 11.3472C36.7405 11.3012 36.5074 11.2495 36.2685 11.1977C36.0238 11.1459 35.785 11.0769 35.5577 11.0022C35.3305 10.9274 35.1266 10.8239 34.946 10.6916C34.7654 10.5651 34.6197 10.3983 34.5148 10.197C34.4041 9.99569 34.3517 9.74839 34.3517 9.44932C34.3517 9.12725 34.4333 8.86269 34.5906 8.64415C34.7479 8.4256 34.9518 8.25306 35.1907 8.12078C35.4354 7.9885 35.7034 7.89648 36.0005 7.83897C36.2977 7.78721 36.5832 7.75845 36.8512 7.75845C37.16 7.75845 37.4571 7.79296 37.7368 7.85622C38.0164 7.91949 38.2728 8.02301 38.5 8.17254C38.7272 8.31632 38.9137 8.50612 39.0652 8.73617C39.2166 8.96622 39.3099 9.24803 39.3506 9.57585H37.9756C37.9116 9.26528 37.7717 9.05249 37.5445 8.94896C37.3173 8.83969 37.0551 8.78793 36.7638 8.78793C36.6706 8.78793 36.5599 8.79368 36.4317 8.81093C36.3035 8.82819 36.187 8.85694 36.0704 8.8972C35.9597 8.93746 35.8665 9.00072 35.785 9.08124C35.7092 9.16176 35.6684 9.26528 35.6684 9.39756C35.6684 9.5586 35.7267 9.68512 35.8374 9.7829C35.9481 9.88067 36.0938 9.96118 36.2744 10.0302C36.455 10.0935 36.6589 10.151 36.892 10.197C37.125 10.243 37.3639 10.2948 37.6086 10.3465C37.8475 10.3983 38.0805 10.4673 38.3136 10.5421C38.5466 10.6168 38.7505 10.7204 38.9312 10.8526C39.1118 10.9849 39.2574 11.1459 39.3681 11.3415C39.4788 11.537 39.5371 11.7843 39.5371 12.0719C39.5371 12.4227 39.4555 12.716 39.2924 12.9633C39.1292 13.2049 38.9195 13.4062 38.6631 13.5557C38.4068 13.7053 38.1155 13.8203 37.8009 13.8893C37.4862 13.9583 37.1716 13.9928 36.8628 13.9928C36.4841 13.9928 36.1345 13.9526 35.8141 13.8663C35.4937 13.78 35.214 13.6535 34.9809 13.4867C34.7479 13.3142 34.5614 13.1014 34.4274 12.8483C34.2934 12.5953 34.2235 12.2904 34.2119 11.9396H35.5403V11.9281ZM39.8867 7.91949H40.8829V6.1481H42.1997V7.91949H43.3882V8.89145H42.1997V12.0431C42.1997 12.1812 42.2055 12.2962 42.2172 12.3997C42.2288 12.4975 42.2579 12.5838 42.2987 12.6528C42.3395 12.7218 42.4036 12.7735 42.491 12.8081C42.5784 12.8426 42.6891 12.8598 42.8406 12.8598C42.9338 12.8598 43.027 12.8598 43.1202 12.8541C43.2135 12.8483 43.3067 12.8368 43.3999 12.8138V13.8203C43.2542 13.8375 43.1086 13.849 42.9746 13.8663C42.8347 13.8835 42.6949 13.8893 42.5493 13.8893C42.1997 13.8893 41.92 13.8548 41.7103 13.7915C41.5005 13.7283 41.3316 13.6305 41.215 13.504C41.0927 13.3774 41.017 13.2221 40.9703 13.0324C40.9296 12.8426 40.9004 12.624 40.8946 12.3825V8.90295H39.8983V7.91949H39.8867ZM44.3204 7.91949H45.5673V8.71891H45.5906C45.777 8.37384 46.0334 8.13228 46.3655 7.98275C46.6976 7.83322 47.053 7.75845 47.4433 7.75845C47.9153 7.75845 48.3231 7.83897 48.6727 8.00576C49.0223 8.16679 49.3136 8.39109 49.5466 8.67865C49.7797 8.96622 49.9486 9.29979 50.0652 9.67937C50.1817 10.059 50.2399 10.4673 50.2399 10.8986C50.2399 11.2955 50.1875 11.6808 50.0826 12.0489C49.9778 12.4227 49.8204 12.7505 49.6107 13.0381C49.401 13.3257 49.1329 13.55 48.8067 13.7225C48.4804 13.895 48.1017 13.9813 47.6589 13.9813C47.4666 13.9813 47.2744 13.9641 47.0821 13.9296C46.8898 13.895 46.7034 13.8375 46.5286 13.7628C46.3538 13.688 46.1849 13.5902 46.0392 13.4695C45.8877 13.3487 45.7654 13.2106 45.6605 13.0554H45.6372V16H44.3204V7.91949ZM48.9232 10.8756C48.9232 10.6111 48.8882 10.3523 48.8183 10.0992C48.7484 9.84616 48.6435 9.62761 48.5037 9.43207C48.3639 9.23653 48.1891 9.08124 47.9852 8.96622C47.7754 8.85119 47.5365 8.78793 47.2685 8.78793C46.715 8.78793 46.2956 8.97772 46.0159 9.3573C45.7362 9.73689 45.5964 10.243 45.5964 10.8756C45.5964 11.1747 45.6314 11.4508 45.7071 11.7038C45.7828 11.9569 45.8877 12.1754 46.0392 12.3595C46.1849 12.5435 46.3596 12.6873 46.5636 12.7908C46.7675 12.9001 47.0064 12.9518 47.2744 12.9518C47.5773 12.9518 47.8279 12.8886 48.0376 12.7678C48.2474 12.647 48.4163 12.486 48.5503 12.2962C48.6843 12.1007 48.7834 11.8821 48.8416 11.6348C48.8941 11.3875 48.9232 11.1344 48.9232 10.8756ZM51.2479 5.67075H52.5646V6.90152H51.2479V5.67075ZM51.2479 7.91949H52.5646V13.8203H51.2479V7.91949ZM53.7415 5.67075H55.0583V13.8203H53.7415V5.67075ZM59.0959 13.9813C58.6181 13.9813 58.1928 13.9008 57.8199 13.7455C57.447 13.5902 57.1324 13.3717 56.8702 13.1014C56.6139 12.8253 56.4158 12.4975 56.2818 12.1179C56.1478 11.7383 56.0779 11.3185 56.0779 10.8641C56.0779 10.4155 56.1478 10.0014 56.2818 9.62186C56.4158 9.24228 56.6139 8.91446 56.8702 8.6384C57.1266 8.36233 57.447 8.14954 57.8199 7.99425C58.1928 7.83897 58.6181 7.75845 59.0959 7.75845C59.5736 7.75845 59.9989 7.83897 60.3718 7.99425C60.7447 8.14954 61.0593 8.36809 61.3215 8.6384C61.5779 8.91446 61.776 9.24228 61.91 9.62186C62.044 10.0014 62.1139 10.4155 62.1139 10.8641C62.1139 11.3185 62.044 11.7383 61.91 12.1179C61.776 12.4975 61.5779 12.8253 61.3215 13.1014C61.0652 13.3774 60.7447 13.5902 60.3718 13.7455C59.9989 13.9008 59.5736 13.9813 59.0959 13.9813ZM59.0959 12.9518C59.3872 12.9518 59.6435 12.8886 59.8591 12.7678C60.0747 12.647 60.2495 12.486 60.3893 12.2904C60.5291 12.0949 60.6282 11.8706 60.6981 11.6233C60.7622 11.376 60.7971 11.1229 60.7971 10.8641C60.7971 10.6111 60.7622 10.3638 60.6981 10.1107C60.634 9.85766 60.5291 9.63911 60.3893 9.44357C60.2495 9.24803 60.0747 9.09274 59.8591 8.97197C59.6435 8.85119 59.3872 8.78793 59.0959 8.78793C58.8046 8.78793 58.5482 8.85119 58.3326 8.97197C58.1171 9.09274 57.9423 9.25378 57.8024 9.44357C57.6626 9.63911 57.5636 9.85766 57.4936 10.1107C57.4296 10.3638 57.3946 10.6111 57.3946 10.8641C57.3946 11.1229 57.4296 11.376 57.4936 11.6233C57.5577 11.8706 57.6626 12.0949 57.8024 12.2904C57.9423 12.486 58.1171 12.647 58.3326 12.7678C58.5482 12.8943 58.8046 12.9518 59.0959 12.9518ZM62.4984 7.91949H63.4947V6.1481H64.8114V7.91949H66V8.89145H64.8114V12.0431C64.8114 12.1812 64.8173 12.2962 64.8289 12.3997C64.8406 12.4975 64.8697 12.5838 64.9105 12.6528C64.9513 12.7218 65.0154 12.7735 65.1028 12.8081C65.1902 12.8426 65.3009 12.8598 65.4523 12.8598C65.5456 12.8598 65.6388 12.8598 65.732 12.8541C65.8252 12.8483 65.9184 12.8368 66.0117 12.8138V13.8203C65.866 13.8375 65.7203 13.849 65.5863 13.8663C65.4465 13.8835 65.3067 13.8893 65.161 13.8893C64.8114 13.8893 64.5318 13.8548 64.322 13.7915C64.1123 13.7283 63.9433 13.6305 63.8268 13.504C63.7045 13.3774 63.6287 13.2221 63.5821 13.0324C63.5413 12.8426 63.5122 12.624 63.5064 12.3825V8.90295H62.5101V7.91949H62.4984Z" fill="#353C58" style="
+    color: white;
+    fill: white;
+"></path>
+<path d="M15.8067 5.67074H9.77066L7.90625 0L6.03602 5.67074L0 5.66499L4.88824 9.17326L3.01801 14.8382L7.90625 11.3357L12.7887 14.8382L10.9243 9.17326L15.8067 5.67074Z" fill="#00B67A"></path>
+<path d="M11.3438 10.4558L10.9243 9.17326L7.90625 11.3357L11.3438 10.4558Z" fill="#005128"></path>
+</g>
+<defs>
+<clipPath id="clip0">
+<rect width="66" height="16" fill="white"></rect>
+</clipPath>
+</defs>
+</svg>
+<p class="small" style="/* margin: 0 0 0 5px; */color: white;margin-bottom: 0;">4.8 out of 5</p>
+</div>
+</div>
+</div>
+	{% endif %}
+	<style>
+        .crossed {
+            background: linear-gradient(to top left,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0) calc(50% - 0.8px),
+            rgba(0, 0, 0, 1) 50%,
+            rgba(0, 0, 0, 0) calc(50% + 0.8px),
+            rgba(0, 0, 0, 0) 100%),
+            linear-gradient(to top right,
+                    rgba(0, 0, 0, 0) 0%,
+                    rgba(0, 0, 0, 0) calc(50% - 0.8px),
+                    rgba(0, 0, 0, 1) 50%,
+                    rgba(0, 0, 0, 0) calc(50% + 0.8px),
+                    rgba(0, 0, 0, 0) 100%);
+        }
+
+        .ab1 {
+            display: none
+        }
+
+        .btn-outline-secondary {
+            font-weight: 400;
+            font-size: 1rem;
+            color: black;
+        }
+
+        .btn-secondary {
+            font-weight: 400;
+            font-size: 1rem;
+            color: black;
+        }
+
+        .btn-secondary {
+            font-weight: 400;
+            font-size: 1.25rem;
+        }
+
+        .radio-selected {
+            font-weight: 400;
+            font-size: 1rem;
+            color: black;
+        }
+
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .3s;
+        }
+
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+        {
+            opacity: 0;
+        }
+
+        .Ash {
+            background-color: #ddd
+        }
+
+        .Black {
+            background-color: black
+        }
+
+        .Czarny {
+            background-color: black
+        }
+
+	</style>
+	{% if store.id == 19 %}
+		<div class="topbar" style="background-color: #343a40;color: white;">
+			<div class="container">
+				<div class="free-shipping-nav-slider-item" style="
+    display: flex;
+    justify-content: center;
+    color: white;
+">
+
+					<svg width="156" height="16" viewBox="0 0 156 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+						 style="
+    margin: 10px;
+">
+						<path d="M89 1H78C76.8954 1 76 1.89543 76 3V14C76 15.1046 76.8954 16 78 16H89C90.1046 16 91 15.1046 91 14V3C91 1.89543 90.1046 1 89 1Z"
+							  fill="#00B67A"></path>
+						<path d="M105.25 1H94.25C93.1454 1 92.25 1.89543 92.25 3V14C92.25 15.1046 93.1454 16 94.25 16H105.25C106.355 16 107.25 15.1046 107.25 14V3C107.25 1.89543 106.355 1 105.25 1Z"
+							  fill="#00B67A"></path>
+						<path d="M121.5 1H110.5C109.395 1 108.5 1.89543 108.5 3V14C108.5 15.1046 109.395 16 110.5 16H121.5C122.605 16 123.5 15.1046 123.5 14V3C123.5 1.89543 122.605 1 121.5 1Z"
+							  fill="#00B67A"></path>
+						<path d="M137.75 1H126.75C125.645 1 124.75 1.89543 124.75 3V14C124.75 15.1046 125.645 16 126.75 16H137.75C138.855 16 139.75 15.1046 139.75 14V3C139.75 1.89543 138.855 1 137.75 1Z"
+							  fill="#00B67A"></path>
+						<path d="M154 1H143C141.895 1 141 1.89543 141 3V14C141 15.1046 141.895 16 143 16H154C155.105 16 156 15.1046 156 14V3C156 1.89543 155.105 1 154 1Z"
+							  fill="#00B67A"></path>
+						<path d="M83.5 11.1094L85.7812 10.5312L86.7344 13.4687L83.5 11.1094ZM88.75 7.3125H84.7344L83.5 3.53125L82.2656 7.3125H78.25L81.5 9.65625L80.2656 13.4375L83.5156 11.0937L85.5156 9.65625L88.75 7.3125Z"
+							  fill="white"></path>
+						<path d="M99.75 11.1094L102.031 10.5312L102.984 13.4687L99.75 11.1094ZM105 7.3125H100.984L99.75 3.53125L98.5156 7.3125H94.5L97.75 9.65625L96.5156 13.4375L99.7656 11.0937L101.766 9.65625L105 7.3125Z"
+							  fill="white"></path>
+						<path d="M116 11.1094L118.281 10.5312L119.234 13.4687L116 11.1094ZM121.25 7.3125H117.234L116 3.53125L114.766 7.3125H110.75L114 9.65625L112.766 13.4375L116.016 11.0937L118.016 9.65625L121.25 7.3125Z"
+							  fill="white"></path>
+						<path d="M132.25 11.1094L134.531 10.5312L135.484 13.4687L132.25 11.1094ZM137.5 7.3125H133.484L132.25 3.53125L131.016 7.3125H127L130.25 9.65625L129.016 13.4375L132.266 11.0937L134.266 9.65625L137.5 7.3125Z"
+							  fill="white"></path>
+						<path d="M148.5 11.1094L150.781 10.5312L151.734 13.4687L148.5 11.1094ZM153.75 7.3125H149.734L148.5 3.53125L147.266 7.3125H143.25L146.5 9.65625L145.266 13.4375L148.516 11.0937L150.516 9.65625L153.75 7.3125Z"
+							  fill="white"></path>
+						<g clip-path="url(#clip0)">
+							<path class="trust-pilot-svg"
+								  d="M17.3448 5.67075H24.0275V6.90152H21.3999V13.8203H19.955V6.90152H17.339V5.67075H17.3448ZM23.7421 7.91949H24.9772V9.05824H25.0005C25.0413 8.8972 25.1171 8.74192 25.2278 8.59238C25.3385 8.44285 25.4725 8.29907 25.6298 8.17829C25.7871 8.05177 25.9619 7.95399 26.1541 7.87348C26.3464 7.79871 26.5445 7.75845 26.7426 7.75845C26.8941 7.75845 27.0048 7.7642 27.063 7.76996C27.1213 7.77571 27.1796 7.78721 27.2436 7.79296V9.04673C27.1504 9.02948 27.0572 9.01798 26.9582 9.00648C26.8591 8.99497 26.7659 8.98922 26.6727 8.98922C26.4513 8.98922 26.2415 9.03523 26.0434 9.1215C25.8453 9.20777 25.6764 9.34005 25.5307 9.50684C25.3851 9.67937 25.2685 9.88642 25.1812 10.1395C25.0938 10.3925 25.053 10.6801 25.053 11.0079V13.8145H23.7362V7.91949H23.7421ZM33.2971 13.8203H32.0037V12.9978H31.9804C31.8173 13.2969 31.5784 13.5327 31.2579 13.711C30.9375 13.8893 30.6112 13.9813 30.2791 13.9813C29.4926 13.9813 28.9216 13.7915 28.572 13.4062C28.2225 13.0209 28.0477 12.44 28.0477 11.6636V7.91949H29.3644V11.537C29.3644 12.0546 29.4635 12.4227 29.6674 12.6355C29.8655 12.8483 30.151 12.9576 30.5122 12.9576C30.7918 12.9576 31.0191 12.9173 31.2055 12.8311C31.392 12.7448 31.5434 12.6355 31.6541 12.4917C31.7707 12.3537 31.8522 12.1812 31.9047 11.9856C31.9571 11.7901 31.9804 11.5773 31.9804 11.3472V7.92524H33.2971V13.8203ZM35.5403 11.9281C35.581 12.3077 35.7267 12.5723 35.9772 12.7275C36.2336 12.8771 36.5366 12.9576 36.892 12.9576C37.0143 12.9576 37.1541 12.9461 37.3114 12.9288C37.4688 12.9116 37.6202 12.8713 37.7542 12.8196C37.8941 12.7678 38.0048 12.6873 38.098 12.5838C38.1854 12.4802 38.2262 12.348 38.2203 12.1812C38.2145 12.0144 38.1504 11.8764 38.0339 11.7728C37.9174 11.6636 37.7717 11.583 37.5911 11.514C37.4105 11.4508 37.2066 11.3932 36.9735 11.3472C36.7405 11.3012 36.5074 11.2495 36.2685 11.1977C36.0238 11.1459 35.785 11.0769 35.5577 11.0022C35.3305 10.9274 35.1266 10.8239 34.946 10.6916C34.7654 10.5651 34.6197 10.3983 34.5148 10.197C34.4041 9.99569 34.3517 9.74839 34.3517 9.44932C34.3517 9.12725 34.4333 8.86269 34.5906 8.64415C34.7479 8.4256 34.9518 8.25306 35.1907 8.12078C35.4354 7.9885 35.7034 7.89648 36.0005 7.83897C36.2977 7.78721 36.5832 7.75845 36.8512 7.75845C37.16 7.75845 37.4571 7.79296 37.7368 7.85622C38.0164 7.91949 38.2728 8.02301 38.5 8.17254C38.7272 8.31632 38.9137 8.50612 39.0652 8.73617C39.2166 8.96622 39.3099 9.24803 39.3506 9.57585H37.9756C37.9116 9.26528 37.7717 9.05249 37.5445 8.94896C37.3173 8.83969 37.0551 8.78793 36.7638 8.78793C36.6706 8.78793 36.5599 8.79368 36.4317 8.81093C36.3035 8.82819 36.187 8.85694 36.0704 8.8972C35.9597 8.93746 35.8665 9.00072 35.785 9.08124C35.7092 9.16176 35.6684 9.26528 35.6684 9.39756C35.6684 9.5586 35.7267 9.68512 35.8374 9.7829C35.9481 9.88067 36.0938 9.96118 36.2744 10.0302C36.455 10.0935 36.6589 10.151 36.892 10.197C37.125 10.243 37.3639 10.2948 37.6086 10.3465C37.8475 10.3983 38.0805 10.4673 38.3136 10.5421C38.5466 10.6168 38.7505 10.7204 38.9312 10.8526C39.1118 10.9849 39.2574 11.1459 39.3681 11.3415C39.4788 11.537 39.5371 11.7843 39.5371 12.0719C39.5371 12.4227 39.4555 12.716 39.2924 12.9633C39.1292 13.2049 38.9195 13.4062 38.6631 13.5557C38.4068 13.7053 38.1155 13.8203 37.8009 13.8893C37.4862 13.9583 37.1716 13.9928 36.8628 13.9928C36.4841 13.9928 36.1345 13.9526 35.8141 13.8663C35.4937 13.78 35.214 13.6535 34.9809 13.4867C34.7479 13.3142 34.5614 13.1014 34.4274 12.8483C34.2934 12.5953 34.2235 12.2904 34.2119 11.9396H35.5403V11.9281ZM39.8867 7.91949H40.8829V6.1481H42.1997V7.91949H43.3882V8.89145H42.1997V12.0431C42.1997 12.1812 42.2055 12.2962 42.2172 12.3997C42.2288 12.4975 42.2579 12.5838 42.2987 12.6528C42.3395 12.7218 42.4036 12.7735 42.491 12.8081C42.5784 12.8426 42.6891 12.8598 42.8406 12.8598C42.9338 12.8598 43.027 12.8598 43.1202 12.8541C43.2135 12.8483 43.3067 12.8368 43.3999 12.8138V13.8203C43.2542 13.8375 43.1086 13.849 42.9746 13.8663C42.8347 13.8835 42.6949 13.8893 42.5493 13.8893C42.1997 13.8893 41.92 13.8548 41.7103 13.7915C41.5005 13.7283 41.3316 13.6305 41.215 13.504C41.0927 13.3774 41.017 13.2221 40.9703 13.0324C40.9296 12.8426 40.9004 12.624 40.8946 12.3825V8.90295H39.8983V7.91949H39.8867ZM44.3204 7.91949H45.5673V8.71891H45.5906C45.777 8.37384 46.0334 8.13228 46.3655 7.98275C46.6976 7.83322 47.053 7.75845 47.4433 7.75845C47.9153 7.75845 48.3231 7.83897 48.6727 8.00576C49.0223 8.16679 49.3136 8.39109 49.5466 8.67865C49.7797 8.96622 49.9486 9.29979 50.0652 9.67937C50.1817 10.059 50.2399 10.4673 50.2399 10.8986C50.2399 11.2955 50.1875 11.6808 50.0826 12.0489C49.9778 12.4227 49.8204 12.7505 49.6107 13.0381C49.401 13.3257 49.1329 13.55 48.8067 13.7225C48.4804 13.895 48.1017 13.9813 47.6589 13.9813C47.4666 13.9813 47.2744 13.9641 47.0821 13.9296C46.8898 13.895 46.7034 13.8375 46.5286 13.7628C46.3538 13.688 46.1849 13.5902 46.0392 13.4695C45.8877 13.3487 45.7654 13.2106 45.6605 13.0554H45.6372V16H44.3204V7.91949ZM48.9232 10.8756C48.9232 10.6111 48.8882 10.3523 48.8183 10.0992C48.7484 9.84616 48.6435 9.62761 48.5037 9.43207C48.3639 9.23653 48.1891 9.08124 47.9852 8.96622C47.7754 8.85119 47.5365 8.78793 47.2685 8.78793C46.715 8.78793 46.2956 8.97772 46.0159 9.3573C45.7362 9.73689 45.5964 10.243 45.5964 10.8756C45.5964 11.1747 45.6314 11.4508 45.7071 11.7038C45.7828 11.9569 45.8877 12.1754 46.0392 12.3595C46.1849 12.5435 46.3596 12.6873 46.5636 12.7908C46.7675 12.9001 47.0064 12.9518 47.2744 12.9518C47.5773 12.9518 47.8279 12.8886 48.0376 12.7678C48.2474 12.647 48.4163 12.486 48.5503 12.2962C48.6843 12.1007 48.7834 11.8821 48.8416 11.6348C48.8941 11.3875 48.9232 11.1344 48.9232 10.8756ZM51.2479 5.67075H52.5646V6.90152H51.2479V5.67075ZM51.2479 7.91949H52.5646V13.8203H51.2479V7.91949ZM53.7415 5.67075H55.0583V13.8203H53.7415V5.67075ZM59.0959 13.9813C58.6181 13.9813 58.1928 13.9008 57.8199 13.7455C57.447 13.5902 57.1324 13.3717 56.8702 13.1014C56.6139 12.8253 56.4158 12.4975 56.2818 12.1179C56.1478 11.7383 56.0779 11.3185 56.0779 10.8641C56.0779 10.4155 56.1478 10.0014 56.2818 9.62186C56.4158 9.24228 56.6139 8.91446 56.8702 8.6384C57.1266 8.36233 57.447 8.14954 57.8199 7.99425C58.1928 7.83897 58.6181 7.75845 59.0959 7.75845C59.5736 7.75845 59.9989 7.83897 60.3718 7.99425C60.7447 8.14954 61.0593 8.36809 61.3215 8.6384C61.5779 8.91446 61.776 9.24228 61.91 9.62186C62.044 10.0014 62.1139 10.4155 62.1139 10.8641C62.1139 11.3185 62.044 11.7383 61.91 12.1179C61.776 12.4975 61.5779 12.8253 61.3215 13.1014C61.0652 13.3774 60.7447 13.5902 60.3718 13.7455C59.9989 13.9008 59.5736 13.9813 59.0959 13.9813ZM59.0959 12.9518C59.3872 12.9518 59.6435 12.8886 59.8591 12.7678C60.0747 12.647 60.2495 12.486 60.3893 12.2904C60.5291 12.0949 60.6282 11.8706 60.6981 11.6233C60.7622 11.376 60.7971 11.1229 60.7971 10.8641C60.7971 10.6111 60.7622 10.3638 60.6981 10.1107C60.634 9.85766 60.5291 9.63911 60.3893 9.44357C60.2495 9.24803 60.0747 9.09274 59.8591 8.97197C59.6435 8.85119 59.3872 8.78793 59.0959 8.78793C58.8046 8.78793 58.5482 8.85119 58.3326 8.97197C58.1171 9.09274 57.9423 9.25378 57.8024 9.44357C57.6626 9.63911 57.5636 9.85766 57.4936 10.1107C57.4296 10.3638 57.3946 10.6111 57.3946 10.8641C57.3946 11.1229 57.4296 11.376 57.4936 11.6233C57.5577 11.8706 57.6626 12.0949 57.8024 12.2904C57.9423 12.486 58.1171 12.647 58.3326 12.7678C58.5482 12.8943 58.8046 12.9518 59.0959 12.9518ZM62.4984 7.91949H63.4947V6.1481H64.8114V7.91949H66V8.89145H64.8114V12.0431C64.8114 12.1812 64.8173 12.2962 64.8289 12.3997C64.8406 12.4975 64.8697 12.5838 64.9105 12.6528C64.9513 12.7218 65.0154 12.7735 65.1028 12.8081C65.1902 12.8426 65.3009 12.8598 65.4523 12.8598C65.5456 12.8598 65.6388 12.8598 65.732 12.8541C65.8252 12.8483 65.9184 12.8368 66.0117 12.8138V13.8203C65.866 13.8375 65.7203 13.849 65.5863 13.8663C65.4465 13.8835 65.3067 13.8893 65.161 13.8893C64.8114 13.8893 64.5318 13.8548 64.322 13.7915C64.1123 13.7283 63.9433 13.6305 63.8268 13.504C63.7045 13.3774 63.6287 13.2221 63.5821 13.0324C63.5413 12.8426 63.5122 12.624 63.5064 12.3825V8.90295H62.5101V7.91949H62.4984Z"
+								  fill="#353C58" style="
+    color: white;
+    fill: white;
+"></path>
+							<path d="M15.8067 5.67074H9.77066L7.90625 0L6.03602 5.67074L0 5.66499L4.88824 9.17326L3.01801 14.8382L7.90625 11.3357L12.7887 14.8382L10.9243 9.17326L15.8067 5.67074Z"
+								  fill="#00B67A"></path>
+							<path d="M11.3438 10.4558L10.9243 9.17326L7.90625 11.3357L11.3438 10.4558Z"
+								  fill="#005128"></path>
+						</g>
+						<defs>
+							<clipPath id="clip0">
+								<rect width="66" height="16" fill="white"></rect>
+							</clipPath>
+						</defs>
+					</svg>
+					<p class="small" style="/* margin: 0 0 0 5px; */color: white;margin-bottom: 0;">4.8 out of 5</p>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	<section class="pt-md-5 pt-0 pt-md-8 border-top" id="products">
+		<div id="overlay"></div>
+		<div class="modal" tabindex="-1" role="dialog" id="modalSmall" data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">{% if stored_date %}Updating{% else %}Creating{% endif %} Your Custom
+							Merchandise</h5>
+					</div>
+					<div class="modal-body">
+						<div class="progress mb-3">
+							<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+								 :style="'width: 40%'"></div>
+						</div>
+						<div class="list-group">
+							<p>Please wait...</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Page Content Goes Here -->
+
+		<div class="modal fade" id="sizeModal" tabindex="-1" aria-labelledby="sizeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header border-0 justify-content-center py-4">
+						<h5 class="modal-title" id="sizeModalLabel">Size Guide for [[getCurrentPrint]]</h5>
+						<button type="button"
+								class="btn btn-link text-decoration-none text-secondary text-dark-hover position-absolute end-0"
+								data-bs-dismiss="modal" aria-label="Close"><i class="ri-close-fill"></i></button>
+					</div>
+					<!-- Size Modal Content-->
+
+					<!-- / Size Modal Content-->
+				</div>
+			</div>
+		</div>
+		<section class="container" data-sticky-container>
+			<div v-cloak>
+				<div class="v-cloak--inline">
+					<div class="col-12 col-lg-6">
+						<div class="row">
+
+							<div class="col-12 col-lg-10">
+								<div class="m-0 overflow-hidden imgs">
+									<picture>
+										<img src="{{ object.get_image.url }}" alt="" style="max-width:100%">
+									</picture>
+								</div>
+							</div>
+							<!-- / Large Images-->
+
+						</div>
+					</div>
+				</div>
+				<div class="row v-cloak--hidden">
+
+					<!-- Images Section-->
+
+					<div class="col-12 col-lg-7 pr-xl-9">
+						<div class="row sticky-md-top">
+
+
+							<picture>
+
+
+								<vue-canvas :image="default_mockup"
+											:designs="'https://www.emmano.pl/'+getDesignImage(selected_design)"
+											{% if design_2 %}:design_2="'{{ design_2.get_image_url }}'"
+											{% else %}:design_2="'{{ design_1.get_image_url }}'"{% endif %}
+											{% if design_3 %}:design_3="'{{ design_3.get_image_url }}'"
+											{% else %}:design_2="'{{ design_1.get_image_url }}'"{% endif %}
+											:key="getCurrentItem.mockups[0]"
+											v-if="default_mockup && !change_graphic"></vue-canvas>
+								<vue-canvas :image="getCurrentItem.mockups[0]"
+											:designs="'https://www.emmano.pl/'+getDesignImage(selected_design)"
+											:key="getCurrentItem.id+'-'+getDesignUUID(selected_design)"
+											v-else-if="shirts > 0 && multiple || change_graphic || !default_mockup"
+											style="max-width:100%"></vue-canvas>
+								<img src="{{ object.get_image.url }}" alt="" style="max-width:100%" v-else>
+							</picture>
+
+							<!-- / Large Images-->
+
+						</div>
+					</div>
+					<!-- Images Section-->
+					<div class="col-12 col-lg-5" v-if="!editting">
+						<div class="mb-0 mb-lg-5 mt-md-0">
+							<div class="pb-3">
+
+								<section>
+
+
+									<h1 class="mb-0 mb-md-2 mt-2 fs-24 fw-bold h4">{% translater 'Your Personalized Shirt' store.default_color %}
+
+
+										<div class="float-right d-flex align-items-center flex-wrap lh-12 fs-12">
+
+										</div>
+									</h1>
+									{{ object.description }}
+
+
+									<p class="d-flex align-items-center mb-0">
+										<span class="text-line-through mr-2">[[ $n(getCurrentItem.price_was, 'currency', '{{ currency.country_code|default:'en-US' }}') ]] </span>
+										<span class="fs-20 text-secondary font-weight-bold" style="font-weight:900;">[[ $n(getCurrentItem.price, 'currency', '{{ currency.country_code|default:'en-US' }}') ]] <span
+												class="badge badge-success fs-12 ml-4 font-weight-400 px-3">{% translater 'Sale' store.default_color %}</span></span>
+
+
+									</p>
+
+								</section>
+								{% if request.GET.printid == '40' %}
+									<p>Edycji Limitowanej. Kiedy się sprzedamy, znikną. Ciesz się ulubionym wzorem na
+										Dzień Matki na jednej z naszych ekologicznych T-shirtów z okrągłym dekoltem w
+										kolorze Vintage White.</p>
+								{% endif %}
+
+								<section v-if="shirts===0 && multiple">
+									<div class="order-lg-1 pr-lg-4 mt-3 text-lg-left">
+										<small>🤩 {% translater 'Your T-Shirts look Awesome!' store.default_color %}</small>
+										<p class="text-secondary fs-18">{% translater "Ile koszulek chcesz zamówić" store.default_color %}</p>
+										<h7 class=" text-danger fs-14  d-none" id="showerror"><b>{% translater "**Wybierz ile osób" store.default_color %}</b>
+										</h7>
+									</div>
+									<div class="class=mt-4 d-flex justify-content-start flex-wrap align-items-start w-md-75">
+										<div class="" v-for="key, index in 6"
+											 @click="setShirt(index+1);gtag('config', '{{ store.google_tag }}', {'page_path': '/products/{{ object.slug }}?step=shirts'});">
+											<button class="btn btn-sm mr-1 mb-3 px-4 fs-16 btn-outline-secondary"
+													@click="setShirt(index+1);gtag('config', '{{ store.google_tag }}', {'page_path': '/products/{{ object.slug }}?step=shirts'});"
+													style="border-color:#666">[[index+1]]
+											</button>
+
+										</div>
+
+										<div class="">
+											<button class="btn btn-sm mr-1 mb-3 px-4 fs-16 btn-outline-secondary"
+													@click="$('#showcustom').removeClass('d-none')">{% translater "More than 6" store.default_color %}
+											</button>
+										</div>
+
+									</div>
+									<div class="form-group d-none" id="showcustom">
+										<p class="selected-option d-block fw-bolder">Enter How Many Shirts</p>
+										<input type="number" class="form-control" v-model="shirt_count"/>
+
+									</div>
+									<div class="btn btn-secondary shadow w-100 mt-2"
+										 @click="if(shirt_count != ''){setShirt(parseInt(shirt_count))}else{$('#showerror').removeClass('d-none')}">
+										{% translater "Wybierz Rozmiary & Kolory" store.default_color %} ⟶
+									</div>
+									{% if not store.name == 'Mila & Emma' %}
+										<p class="text-center w-100 mb-3 mt-3">🟢 Auf Lager. Versand innerhalb von 1 Werktag.</p>
+									{% endif %}
+								</section>
+								<section v-if="multiple">
+									<transition-group name="fade" tag="section">
+										<div v-for="k, value, index in shirt_collection"
+											 v-if="shirt == value && shirts > 0" :key="k+index+value">
+											<small class="text-uppercase pt-2 d-block fw-bolder">
+
+												<span class="fs-12 text-secondary">[[ $t("messages['" + getCurrentPrintItem.category + "']") ]]: [[ value ]] [[ $t("messages['z']")]] [[ shirts]]</span>
+											</small>
+											<div class="" v-if="Object.keys(designs).length>1">
+												<small class="text-uppercase pt-2 d-block fw-bolder">
+													[[ $t("messages['DESIGN']")]]: <span class="fs-16 text-secondary">[[ k.design || "NOT SELECTED" ]] </span>
+												</small>
+												<div class="mt-2 d-flex justify-content-start flex-wrap align-items-start">
+													<select name="selectSize" class="form-control" v-model="k.design"
+															@change="selected_design=$event.target.value">
+														<option v-for="value, choice in designs" :value="value.title">[[
+															value.title ]]
+														</option>
+													</select>
+
+
+												</div>
+											</div>
+											<section v-if="Object.keys(getDesign).length>1 ">
+												<div class="mb-3">
+													<small class="text-uppercase pt-2 d-block fw-bolder">
+														[[ $t("messages['STYL']")]]: <span class="fs-12 text-secondary"
+																						   :key="getCurrentItem.price">[[ $t("messages['" + getCurrentPrint + "']") ]]</span>
+													</small>
+													<div class="mt-2 d-flex justify-content-start flex-wrap align-items-start">
+
+														<div class="ab2">
+															<button type="button" class="btn m-1"
+																	v-for="print, key in getDesign"
+																	v-if="!print.limited"
+																	@click="k.style=key;setPrint(key);gtag('config', '{{ store.google_tag }}', {'page_path': '/products/{{ object.slug }}?step=style'});"
+																	:class="[{ 'radio-selected': getCurrentPrint===key },{'btn-outline-secondary':getCurrentPrint!==key}]">
+																[[ $t("messages['" + print.short + "']") ]]
+															</button>
+														</div>
+													</div>
+												</div>
+
+											</section>
+											<section v-if="Object.keys(getDesignColor).length>1">
+
+												<div class="mb-3">
+													<small class="text-uppercase pt-2 d-block fw-bolder">
+														[[ $t("messages['KOLOR']")]]: <span class="fs-12 text-secondary"
+																							v-if="k.color != ''">[[ k.color ]] </span><span
+															class="fs-12 text-danger" v-else>[[ $t("messages['NIE WYBRANY']")]]</span>
+													</small>
+													<div class="mt-2 d-flex justify-content-start flex-wrap align-items-start">
+														<div class="form-check-option form-check-rounded"
+															 v-for="print, key in getDesignColor"
+															 @click="k.color=key;setColor(key);gtag('config', '{{ store.google_tag }}', {'page_path': '/products/{{ object.slug }}?step=color'});">
+															<label for="option-sizes-0"
+																   style="border: 1px solid black!important; margin-right:5px; height:40px!important;width:40px!important;min-width:0!important;"
+																   :class="[{ 'radio-selected': k.color===key }, key]">
+															</label>
+														</div>
+													</div>
+												</div>
+
+											</section>
+											<section>
+												<div class="d-flex justify-content-between align-items-center pb-1 bb">
+													<small class="text-uppercase pt-2 d-block fw-bolder">
+														[[ $t("messages['ROZMIAR']")]]:<span
+															class="fs-12 text-secondary" v-if="k.size != ''">[[ k.size ]]</span><span
+															class="fs-12 text-danger" v-else>[[ $t("messages['NIE WYBRANY']")]]</span>
+
+													</small>
+
+													</a>
+
+												</div>
+												<div class="form-group">
+
+													<button type="button"
+															@click="k.size=key;k.printid=print.id;stock=print.stock;setSize(key)"
+															v-for="print, key in getDesignColorSize"
+															{% if request.GET.printid == '40' %}:disabled="print.stock <10"{% endif %}
+															class="btn m-1"
+															:class="[{ 'radio-selected': k.size===key },{'btn-outline-secondary':k.size!==key}{% if request.GET.printid == '40' %}, {'crossed':print.stock <10}{% endif %}]">
+														[[ print.title ]]
+													</button>
+
+												</div>
+
+											</section>
+
+											<section class="d-flex justify-content-between" v-if="value<shirts">
+												<button type='button' class="btn btn-outline-secondary w-25 mt-2"
+														@click="shirt-=1"
+														v-if="value > 1">
+													[[ $t('messages["Cofnij"]') ]]
+												</button>
+												<button type='button' class="btn btn-secondary w-50 mt-2"
+														@click="getNextShirt(shirt);"
+														:disabled="!k.size || !k.color"
+														:class="[{'disabled':!k.size || !k.color}]">
+													[[ $t('messages["Następna"]') ]] ⟶
+												</button>
+											</section>
+											<form method="POST" action="/products/{{ object.slug }}" class="d-block"
+												  v-if="value==shirts">
+												{% csrf_token %}
+												<div class="d-flex justify-content-between">
+													<div class="btn btn-outline-secondary w-25 mt-2 mr-2"
+														 @click="shirt-=1"
+														 v-if="value > 1">
+														[[ $t('messages["Cofnij"]') ]]
+													</div>
+													<button style="font-weight: 500;letter-spacing: 1.5px;"
+															class="btn btn-secondary shadow w-md-50 w-100 mt-2"
+															id="btn-submit" v-if="value==shirts"
+															:class="[{'disabled':!k.size || !k.color}]"
+															@click="$('#btn-submit').addClass('disabled');$('#btn-submit').text('{% translater 'Dodawanie do koszyka' store.default_color %}...');">
+														<i class="ri-shopping-bag-3-fill" style="margin-right:10px"></i>
+														In den Warenkorb
+													</button>
+												</div>
+
+												<div class="form-group">
+													<div class="form-group">
+														<input v-for="key, value, index in shirt_collection"
+															   type="hidden"
+															   :id="'pbid|'+key.printid+'|'+getDesignUUID(key.design)+'|'+value"
+															   :name="'pbid|'+key.printid+'|'+getDesignUUID(key.design)+'|'+value"
+															   :value="1"/>
+
+													</div>
+
+												</div>
+
+											</form>
+
+										</div>
+									</transition-group>
+								</section>
+								<section v-else>
+									<section v-if="Object.keys(getDesign).length>1 ">
+										<div class="mb-3">
+											<small class="text-uppercase pt-2 d-block fw-bolder">
+												[[ $t("messages['STYL']")]]: <span class="fs-12 text-secondary"
+																				   :key="getCurrentPrintItem.price">[[ getCurrentPrint ]] </span>
+											</small>
+											<div class="mt-2 d-flex justify-content-start flex-wrap align-items-start">
+												<button type="button" class="btn m-1" v-for="print, key in getDesign"
+														@click="single_shirt.style=key;setPrint(key);gtag('config', '{{ store.google_tag }}', {'page_path': '/products/{{ object.slug }}?step=style'});single_shirt.printid=getCurrentItem.id;"
+														:class="[{ 'radio-selected': getCurrentPrint===key },{'btn-outline-secondary':getCurrentPrint!==key}]">
+													[[key]]
+												</button>
+											</div>
+										</div>
+
+									</section>
+									<h6 class="mt-3 mb-0">{% translater 'Wybierz Styl' store.default_color %}</h6>
+									<section v-if="Object.keys(getDesignColor).length>1">
+										<div class="mb-3">
+											<div class="mt-2 d-flex justify-content-start flex-wrap align-items-start">
+												<div class="form-check-option form-check-rounded"
+													 v-for="print, key in getDesignColor"
+													 @click="gtag('config', '{{ store.google_tag }}', {'page_path': '/products/{{ object.slug }}?step=color'});single_shirt.color=key;setColor(key);setSize(single_shirt.size);single_shirt.printid=getCurrentItem.id;">
+													<label for="option-sizes-0"
+														   class="text-uppercase p-2 btn btn-outline-secondary mr-2 fs-12"
+														   style="min-width:0!important;"
+														   :class="[{ 'radio-selected': single_shirt.color===key }, key]">
+														[[ $t("messages['" + key + "']") ]]
+													</label>
+												</div>
+											</div>
+										</div>
+
+									</section>
+									<h6 class="mt-3 mb-0">{% translater 'Wybierz Rozmiar' store.default_color %}</h6>
+									<section v-if="Object.keys(getDesignColorSize).length>1">
+										<small class="text-uppercase pt-2 d-block fw-bolder">
+											[[ $t("messages['ROZMIAR']")]]:<span class="fs-12 text-secondary"
+																				 v-if="single_shirt.size != ''">[[ single_shirt.size ]]</span><span
+												class="fs-12 text-danger"
+												v-else>[[ $t("messages['NIE WYBRANY']")]]</span> <span v-if="stock<100"
+																									   style="color:red;"> -- Niski stan magazynowy. Mniej niż 40.--</span>
+										</small>
+
+
+										<div class="form-group">
+
+											<button type="button"
+													@click="gtag('config', '{{ store.google_tag }}', {'page_path': '/products/{{ object.slug }}?step=size'});single_shirt.size=key;setSize(key);setColor(single_shirt.color);single_shirt.printid=getCurrentItem.id;"
+													v-for="print, key in getDesignColorSize" class="btn m-1"
+													:class="[{ 'radio-selected': single_shirt.size===key },{'btn-outline-secondary':single_shirt.size!==key}]">
+												<span v-if="print.title[0] == '6'">{% translater 'Medium Print' store.default_color %}<br></span>
+												<span v-else-if="print.title[1] == '4'">{% translater 'Medium Print' store.default_color %}<br></span>
+												<span v-else>{% translater 'Large Print' store.default_color %}<br></span>
+												<small v-if="print.title[0] != 'A'">[[ $t("messages['" + print.title[0]
+													+ "']") ]]</small>
+												<small v-else>[[ print.title ]]</small>
+											</button>
+
+										</div>
+
+									</section>
+									<form method="POST" action="/products/{{ object.slug }}"
+										  class="row mx-n2">
+										{% csrf_token %}
+										<div class="col-3">
+											<div class="input-group position-relative w-100">
+												<small style="font-weight:900"
+													   class="text-secondary">{% translater 'Qty' store.default_color %}</small>
+												<select name="qty" type="number" id="qty" v-model="qty"
+														class="form-control w-100 px-2 text-center input-quality text-secondary h-60 fs-18 font-weight-bold border-0"
+														value="1" required="">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+
+												</select>
+
+											</div>
+										</div>
+										<div class="col-8 mb-6 w-100 mt-2 px-2">
+
+											<button style="font-weight: 900;letter-spacing: 1.5px;"
+													class="btn btn-secondary shadow w-md-50 w-100 mt-2" id="btn-submit"
+													:class="[{'disabled':!single_shirt.size || !single_shirt.color}]"
+													@click="$('#btn-submit').addClass('disabled');$('#btn-submit').text('Dodawanie do koszyka...');">
+												<i class="ri-shopping-bag-3-fill" style="margin-right:10px"></i>
+												{% translater 'Dodaj do Koszyka' store.default_color %}
+											</button>
+										</div>
+										<div class="form-group">
+											<div class="">
+												<input type="hidden" :id="'pbix|'+print.id+'|1'"
+													   :name="'pbix|'+single_shirt.printid+'|1'" :value="qty"/>
+												<input type="hidden" name="design_1" value="{{ design_1.uuid }}"/>
+											</div>
+
+										</div>
+										<div class="under-atc-badge" style="width: 100%;display: flex;">
+					<div class="d-flex justify-content-between w-100 px-3 mb-3 mt-3 mt-md-0" style="">
+						<div class="bunch d-flex bg-light p-2 rounded  mr-3 w-100 bg-secondary">
+							<img src="//cdn.shopify.com/s/files/1/0576/9596/1249/t/18/assets/Free_Delivery_Icon.png?v=93785781731047290871651136281" class="diffrentimg png-image" style="max-height: 25px;">
+
+							<span>Free Shipping above $59</span>
+						</div>
+						<div class="bunch d-flex bg-light rounded p-2 w-100">
+							<img src="//cdn.shopify.com/s/files/1/0576/9596/1249/t/18/assets/iconavantage_a.svg?v=111774205848938353861648109378" class="diffrentimg" style="max-height: 25px;">
+							<span>FREE Personalization!</span>
+						</div>
+					</div>
+				</div>
+									</form>
+
+								</section>
+								<section v-if="multiple && shirts > 0">
+									<h4 class="mt-3" v-if="shirts">[[ $t('messages["Twoje dodane koszulki"]')]]</h4>
+
+									<div class="" v-for="key, value, index in shirt_collection" v-if="shirts > 0"
+										 :key="key+index+value">
+
+										<small class="text-uppercase pt-3 d-block fw-bolder"
+											   @click="shirt=parseInt(value)" v-if="key.color && key.size">[[ value ]]
+											[[ $t("messages['z']")]] [[ shirts]]: <span class="fs-12 text-secondary"> [[ $t("messages['" + key.color + "']") ]] / [[ key.size ]]</span>
+										</small>
+									</div>
+								</section>
+
+								<form method="POST" action="/products/{{ object.slug }}" class="d-block" id="form-1"
+									  v-if="hasShirt">
+									{% csrf_token %}
+
+
+									<a onclick="$('#form-1').submit()" v-if="shirts > 0"
+									   style="text-decoration:underline" id="btn-submits"
+									   @click="$('#btn-submits').addClass('disabled');$('#btn-submits').text('Dodawanie do koszyka...');">
+										[[ $t("messages['Dodaj tylko te koszulki']")]] ⟶
+									</a>
+									<div class="form-group">
+										<input v-for="key, value, index in shirt_collection" type="hidden"
+											   :id="'pbid|'+key.printid+'|'+getDesignUUID(key.design)+'|'+value"
+											   :name="'pbid|'+key.printid+'|'+getDesignUUID(key.design)+'|'+value"
+											   value="1" v-if="key.printid"/>
+
+									</div>
+
+								</form>
+
+
+							</div>
+							{% if not store.id == 18 %}
+
+							{% endif %}
+
+							<section v-if="showing===-1">
+								{% if not store.id == 18 %}
+
+								{% else %}
+
+								{% endif %}
+
+							</section>
+
+						</div>
+						<div id="accordion-style" class="accordion">
+							<div class="card border-0 mb-4  mt-3">
+								<div class="card-header border-0 p-0 bg-transparent bg-transparent"
+									 id="headingProductDetail">
+									<h5 class="mb-0 fs-18 w-100">
+										<a onclick="$('#infoModal1').addClass('show')"
+										   class="d-flex align-items-center border-bottom pb-2 text-decoration-none collapsed"
+										   aria-expanded="false" aria-controls="product-detail">
+											<span>Product Detail</span>
+											<span class="icon d-inline-block ml-auto"></span>
+										</a>
+									</h5>
+								</div>
+
+							</div>
+							<div class="card border-0 mb-4">
+								<div class="card-header border-0 p-0 bg-transparent bg-transparent"
+									 id="headingHowToUse">
+									<h5 class="mb-0 fs-18 w-100">
+										<a onclick="$('#infoModal2').addClass('show')"
+										   class="d-flex align-items-center border-bottom pb-2 text-decoration-none collapsed">
+											<span>How it works</span>
+											<span class="icon d-inline-block ml-auto"></span>
+										</a>
+									</h5>
+								</div>
+
+							</div>
+							<div class="card border-0">
+								<div class="card-header border-0 p-0 bg-transparent bg-transparent"
+									 id="headingIngredients">
+									<h5 class="mb-0 fs-18 w-100">
+										<a onclick="$('#infoModal3').addClass('show')"
+										   class="d-flex align-items-center border-bottom pb-2 text-decoration-none collapsed"
+										   data-toggle="collapse" data-target="#ingredients" aria-expanded="true"
+										   aria-controls="ingredients">
+											<span>Production & Shipping</span>
+											<span class="icon d-inline-block ml-auto"></span>
+										</a>
+									</h5>
+									<p>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</section>
+
+		<!-- / Product Top-->
+
+
+		<!-- Product Reviews-->
+
+
+	</section>
+
+	<div class="canvas-sidebar cart-canvas" id="infoModal1">
+		<div class="canvas-overlay" onclick="$('#infoModal1').removeClass('show')">
+		</div>
+		<div class="card border-0 pt-4 pb-7 h-100">
+
+
+			<div class="modal-header">
+				<div class="float-right" style="margin-left:auto;" onclick="$('#infoModal1').removeClass('show')">
+					<svg width="32" onclick="$('#infoModal1').removeClass('show')" height="32" viewBox="0 0 42 42"
+						 fill="none" xmlns="http://www.w3.org/2000/svg">
+						<rect width="42" height="42" rx="21" fill="white"></rect>
+						<path fill-rule="evenodd" clip-rule="evenodd"
+							  d="M22.9016 21L28.6062 15.2954C29.1313 14.7703 29.1313 13.919 28.6062 13.3939C28.081 12.8688 27.2297 12.8688 26.7046 13.3939L21 19.0986L15.2953 13.3938C14.7702 12.8687 13.9189 12.8687 13.3938 13.3938C12.8687 13.919 12.8687 14.7703 13.3938 15.2954L19.0984 21L13.3938 26.7046C12.8687 27.2297 12.8687 28.0811 13.3938 28.6062C13.9189 29.1313 14.7702 29.1313 15.2953 28.6062L21 22.9015L26.7046 28.6062C27.2297 29.1313 28.081 29.1313 28.6062 28.6062C29.1313 28.081 29.1313 27.2297 28.6062 26.7046L22.9016 21Z"
+							  fill="black"></path>
+					</svg>
+				</div>
+			</div>
+			<div class="modal-body d-flex">
+				<div class="d-flex flex-column justify-content-between w-100">
+					<h4>Product Details</h4>
+				</div>
+			</div>
+			<!-- / Cart Modal Content-->
+		</div>
+
+	</div>
+	<div class="canvas-sidebar cart-canvas" id="infoModal2">
+		<div class="canvas-overlay" onclick="$('#infoModal2').removeClass('show')">
+		</div>
+		<div class="card border-0 pt-4 pb-7 h-100">
+
+
+			<div class="modal-header">
+				<div class="float-right" style="margin-left:auto;" onclick="$('#infoModal2').removeClass('show')">
+					<svg width="32" onclick="$('#infoModal2').removeClass('show')" height="32" viewBox="0 0 42 42"
+						 fill="none" xmlns="http://www.w3.org/2000/svg">
+						<rect width="42" height="42" rx="21" fill="white"></rect>
+						<path fill-rule="evenodd" clip-rule="evenodd"
+							  d="M22.9016 21L28.6062 15.2954C29.1313 14.7703 29.1313 13.919 28.6062 13.3939C28.081 12.8688 27.2297 12.8688 26.7046 13.3939L21 19.0986L15.2953 13.3938C14.7702 12.8687 13.9189 12.8687 13.3938 13.3938C12.8687 13.919 12.8687 14.7703 13.3938 15.2954L19.0984 21L13.3938 26.7046C12.8687 27.2297 12.8687 28.0811 13.3938 28.6062C13.9189 29.1313 14.7702 29.1313 15.2953 28.6062L21 22.9015L26.7046 28.6062C27.2297 29.1313 28.081 29.1313 28.6062 28.6062C29.1313 28.081 29.1313 27.2297 28.6062 26.7046L22.9016 21Z"
+							  fill="black"></path>
+					</svg>
+				</div>
+			</div>
+			<div class="modal-body d-flex">
+				<div class="d-flex flex-column justify-content-between w-100">
+					<h4>How it works</h4>
+				</div>
+			</div>
+			<!-- / Cart Modal Content-->
+		</div>
+
+	</div>
+	<div class="canvas-sidebar cart-canvas" id="infoModal3">
+		<div class="canvas-overlay" onclick="$('#infoModal3').removeClass('show')">
+		</div>
+		<div class="card border-0 pt-4 pb-7 h-100">
+
+
+			<div class="modal-header">
+				<div class="float-right" style="margin-left:auto;" onclick="$('#infoModal3').removeClass('show')">
+					<svg width="32" onclick="$('#infoModal3').removeClass('show')" height="32" viewBox="0 0 42 42"
+						 fill="none" xmlns="http://www.w3.org/2000/svg">
+						<rect width="42" height="42" rx="21" fill="white"></rect>
+						<path fill-rule="evenodd" clip-rule="evenodd"
+							  d="M22.9016 21L28.6062 15.2954C29.1313 14.7703 29.1313 13.919 28.6062 13.3939C28.081 12.8688 27.2297 12.8688 26.7046 13.3939L21 19.0986L15.2953 13.3938C14.7702 12.8687 13.9189 12.8687 13.3938 13.3938C12.8687 13.919 12.8687 14.7703 13.3938 15.2954L19.0984 21L13.3938 26.7046C12.8687 27.2297 12.8687 28.0811 13.3938 28.6062C13.9189 29.1313 14.7702 29.1313 15.2953 28.6062L21 22.9015L26.7046 28.6062C27.2297 29.1313 28.081 29.1313 28.6062 28.6062C29.1313 28.081 29.1313 27.2297 28.6062 26.7046L22.9016 21Z"
+							  fill="black"></path>
+					</svg>
+				</div>
+			</div>
+			<div class="modal-body d-flex">
+				<div class="d-flex flex-column justify-content-between w-100">
+					<h4>Production & Shipping</h4>
+				</div>
+			</div>
+			<!-- / Cart Modal Content-->
+		</div>
+
+	</div>
+
+
+{% endblock %}
+{% block vue %}
+	<script src="{% static 'js/jscolor.js' %}"></script>
+
+	<script>
+        window.onpageshow = function (event) {
+            if (event.persisted) {
+                vm.$forceUpdate();
+
+            }
+
+        };
+	</script>
+	<script>
+
+        Vue.use(VueLoading);
+
+        function loadImage(url) {
+            return new Promise((fulfill, reject) => {
+                let imageObj = new Image();
+                imageObj.onload = () => fulfill(imageObj);
+                imageObj.src = url;
+            });
+        }
+
+        Vue.use(Croppa);
+        Vue.use(VeeValidate);
+
+        Vue.component('vue-slider', {
+            delimiters: ['[[', ']]'],
+            template: '<div class="product-gallery position-sticky" :key="getCurrentItem">\n' +
+                '\n' +
+                '                    <ul class="product-thumbnails">\n' +
+                '                        <li class="active" v-for="mockup,index in getCurrentItem.mockups" :key="mockup">\n' +
+                '                            <a :href="\'#\'+index">\n' +
+                '                                <vue-canvas  :image="mockup" :designs="{% if design_1 %}{{ design_1.get_image_url }}{% else %}{% endif %}" :key="mockup"></vue-canvas>\n' +
+                '                            </a>\n' +
+                '                        </li>\n' +
+                '                    </ul>\n' +
+                '                    <div class="product-carousel owl-carousel">\n' +
+                '                        <a :href="mockup.image" data-fancybox="prod-gallery" :data-hash="index" v-for="mockup, index in getCurrentItem.mockups" :key="mockup">\n' +
+                '                            <vue-canvas  :image="mockup" :designs="{% if design_1 %}{{ design_1.get_image_url }}{% else %}{% endif %}" :key="mockup"></vue-canvas>\n +' +
+                '                        </a>\n' +
+                '                    </div>\n' +
+                '                    <p></p>\n' +
+                '\n' +
+                '                </div>',
+            props: ['item'],
+            data() {
+                return {
+                    getCurrentItem: this.item,
+
+                }
+            },
+        });
+
+        var app = new Vue({
+            i18n,
+            el: '#products',
+            delimiters: ['[[', ']]'],
+            components: {
+                'vue-canvas': VueCanvas,
+                'pinch-zoom': PinchZoom
+            },
+            data() {
+
+                return {
+                    myCroppa: {},
+                    dataUrl: null,
+                    printog: true,
+                    imageNotSelected: true,
+                    multiple: {% if object.show_multiple_shirts %}true{% else %}false{% endif %},
+                    selected_design: "",
+                    {% if object.default_mockup %}
+                        default_mockup: {{ object.default_mockup.get_json_dump|safe }},
+                    {% else %}
+                        default_mockup: '',
+                    {% endif %}
+                    change_graphic: false,
+                    designs: {
+                        {% for design in designs  %}
+                            "{{ design.image_creator|safe }}": {
+                                'title': "{{design.image_creator.title|safe}}",
+                                'image_id': "{{ design.uuid }}",
+                                'image_url': "{{ design.get_image_url|safe }}",
+                                'default_mockup': "{{ design.image_creator|safe }}",
+                            },
+                        {% endfor %}
+                    },
+                    sliderVal: 0,
+                    step: '0|0',
+                    sliderMin: 0,
+                    shirts: 0,
+                    shirt_count: '',
+                    shirt: 1,
+                    // fix mug issue
+                    single_shirt: {"printid": '958', "color": "Biała", "size": "S", "style": ""},
+                    shirt_collection: {},
+                    {% if not request.GET.printid or request.GET.printid == '21' %}
+                        prints: {% get_single_po object '' as result %}{{ result|safe }},
+                    {% else %}
+
+                        prints: {% get_single_po object request.GET.printid as result %}{{ result|safe }},
+                    {% endif %}
+                    stock: 1000,
+                    all_prints: {% get_single_po object "" as result %}{{ result|safe }},
+                    img_base: '',
+                    cart: '',
+                    qty: 1,
+                    sliderMax: 0,
+                    canvasSize: 600,
+                    percent: 0,
+                    editting: {% if request.GET.design_1 or design_1 %}false{% else %}true{% endif %},
+                    background: '',
+                    color: '',
+                    preload: '',
+                    added: '',
+                    initial: null,
+                    question_group: {% if object.get_or_create_group_json %}{{ object.get_or_create_group_json|safe }}{% else %}''{% endif %},
+                    showing: -1,
+                    question_set: {% if object.get_or_create_json %}{{ object.get_or_create_json|safe }}{% else %}''{% endif %},
+                    stored_data: '',
+                }
+            },
+            mounted: function () {
+                this.selected_design = this.designs[Object.keys(this.designs)[0]]['title'];
+                if (this.stored_data) {
+                    if ("color" in this.stored_data) {
+                        this.color = this.stored_data['color']
+                        $('#txtclor').attr('color', this.color.replace('\(', '').replace('\)', '').replace(' ', ''))
+
+                    }
+                    if ("background" in this.stored_data) {
+                        this.background = this.stored_data['background']
+                        $('#bgcolor').attr('color', this.background.replace('\(', '').replace('\)', '').replace(' ', ''))
+                    }
+                    for (var key in this.question_set) {
+
+                        for (value in this.question_set[key]["attributes"]) {
+
+                            this.question_set[key]["attributes"][value]["answer"] = this.stored_data[key]["attributes"][value]
+
+                            if ("answers" in this.question_set[key]["attributes"][value]) {
+
+                                for (selector in this.question_set[key]["attributes"][value]["answers"]) {
+                                    results = this.question_set[key]["attributes"][value]["answers"][selector]
+                                    if ("answers" in results) {
+                                        if (this.stored_data[key]["attributes"][value] in
+                                            this.question_set[key]["attributes"][value]["answers"][selector]["answers"]
+                                        ) {
+                                            this.question_set[key]["attributes"][value]["selection"] = this.question_set[key]["attributes"][value]["answers"][selector]
+                                        } else {
+                                        }
+                                    }
+
+                                }
+                            }
+                            if (this.question_set[key]["attributes"][value]["type"] == "C") {
+
+                                Vue.set(this, 'initial', "/pdo/" + this.stored_data[key]["attributes"][value])
+
+                            }
+                        }
+                    }
+                }
+                if (this.preload) {
+
+                    for (var k in this.question_set) {
+
+                        if (k in this.preload) {
+
+                            for (v in this.question_set[k]["attributes"]) {
+
+                                if (v in this.preload[k]["attributes"]) {
+
+                                    this.question_set[k]["attributes"][v]["answer"] = this.preload[k]["attributes"][v]
+                                    this.question_set[k]["attributes"][v]["preload"] = true;
+                                } else {
+                                    this.question_set[k]["attributes"][v]["preload"] = false;
+                                }
+                            }
+                        }
+                    }
+                }
+                this.single_shirt = {
+                    "printid": this.getCurrentItem.id,
+                    "color": this.getCurrentColor,
+                    "size": this.getCurrentSize,
+                    "style": ""
+                }
+
+            },
+
+            http: {
+                headers: {
+                    'X-CSRFToken': csrftoken
+                }
+
+            },
+            methods: {
+                getStock: function () {
+                    console.log(k.style, k.color, k.size)
+                    color = Object.keys(app.prints['designs']['base_design']['prints'][k.style]['colors'])
+                    return app.prints['designs']['base_design']['prints'][k.style]['colors'][color[0]][k.size]['stock']
+                },
+
+                defaultDesign: function (title) {
+                    return this.designs[Object.keys(this.designs)[0]]['title']
+                },
+                getDesignImage: function (title) {
+                    return this.designs[title]['image_url']
+                },
+                getDesignUUID: function (title) {
+                    return this.designs[title]['image_id']
+                },
+                getNextShirt(shirt) {
+                    this.shirt += 1;
+                    if (this.shirt_collection[this.shirt]["printid"] == "") {
+                        this.shirt_collection[this.shirt]["color"] = this.getCurrentColor;
+                    }
+                    this.selected_design = this.shirt_collection[this.shirt]["design"]
+                },
+                getFirstGrouping(step, count) {
+                    steps = this.step.split('|')
+                    parent_list = Object.keys(this.question_set)
+                    step_list = Object.keys(this.question_set[parent_list[steps[0]]]["attributes"])
+                    var i;
+                    for (i = 0; i < step_list.length; i++) {
+                        checkStep = this.question_set[parent_list[steps[0]]]["attributes"][step_list[i]]
+                        if (checkStep['questiongroup'] === step['questiongroup']) {
+                            return count == i
+                        }
+                    }
+                    return true
+                },
+                setShowing: function (key) {
+                    this.showing = key;
+                    this.question_set = this.question_group[key]
+                },
+                submitProductM: function (id) {
+                    var formData = new FormData(this.$refs['formm'][0]); // reference to form element
+                    var body = {}; // need to convert it before using not with XMLHttpRequest
+                    for (let [key, val] of formData.entries()) {
+                        Object.assign(body, {[key]: val})
+                    }
+
+                    $('#singleadd').text('Adding Product...')
+                    $('#singleadd').attr('disabled', true);
+                    $('#multipleadd').text('Adding Product...')
+                    $('#multipleadd').attr('disabled', true);
+                    app = this;
+                    this.$http({
+                        method: 'post',
+                        url: '/products/{{ object.slug }}/api',
+                        body: body
+                    }).then(response => {
+                        $('#' + id).modal('hide')
+                        data = JSON.parse(response.data['checkout'])
+                        console.log(data)
+                        app.added = JSON.parse(response.data['added'])
+                        cart.cart.subtotal = data['subtotal']
+                        cart.cart = data
+                        cart.cartnote = response.data['cartnote']
+
+                        app.cart.subtotal = data['subtotal']
+                        app.cart = data
+                        app.cartnote = response.data['cartnote']
+                        $('#addedCart').modal('show');
+
+                        $('#singleadd').text('currency')
+                        $('#singleadd').attr('disabled', false);
+                        $('#multipleadd').text('currency')
+                        $('#multipleadd').attr('disabled', false);
+
+                    })
+
+                },
+                submitProduct: function () {
+                    var formData = new FormData(this.$refs['form'][0]); // reference to form element
+                    var body = {}; // need to convert it before using not with XMLHttpRequest
+                    for (let [key, val] of formData.entries()) {
+                        Object.assign(body, {[key]: val})
+                    }
+                    console.log(body);
+                    app = this;
+                    $('#singleadd').text('Adding Product...')
+                    $('#singleadd').attr('disabled', true);
+                    $('#multipleadd').text('Adding Product...')
+                    $('#multipleadd').attr('disabled', true);
+                    this.$http({
+                        method: 'post',
+                        url: '/products/{{ object.slug }}/api',
+                        body: body
+                    }).then(response => {
+                        data = JSON.parse(response.data['checkout'])
+                        app.added = JSON.parse(response.data['added'])
+                        cart.cart.subtotal = data['subtotal']
+                        cart.cart = data
+                        cart.cartnote = response.data['cartnote']
+
+                        app.cart.subtotal = data['subtotal']
+                        app.cart = data
+                        app.cartnote = response.data['cartnote']
+                        $('#addedCart').modal('show');
+
+                        $('#singleadd').text('currency')
+                        $('#singleadd').attr('disabled', false);
+                        $('#multipleadd').text('currency')
+                        $('#multipleadd').attr('disabled', false);
+                    })
+
+                },
+                getDesignMockup: function (design) {
+                    return design["colors"][design.selected_color][design.selected_size]
+
+                },
+                setDesign: function (design) {
+                    this.prints["selected_design"] = design
+                },
+
+                setShirt: function (print) {
+                    this.shirts = print
+                    this.shirt_collection = {}
+                    for (i = 1; i < print + 1; i++) {
+                        Vue.set(this.shirt_collection, i, {
+                            parent: "",
+                            printid: "",
+                            design: this.selected_design,
+                            color: this.getCurrentColor,
+                            size: "",
+                        })
+                    }
+                },
+                setPrint: function (print) {
+                    console.log(print)
+                    Vue.set(this, 'prints', this.all_prints)
+                    this.prints["designs"][this.getCurrentDesign]["selected_print"] = print;
+                    this.change_graphic = true;
+                    fbq('track', 'ChangedPrintLander')
+                    fbq('track', 'ChangedPrintLander')
+                },
+                setColor: function (color) {
+                    this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["selected_color"] = color
+
+
+                },
+                setSize: function (size) {
+                    this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["selected_size"] = size
+                    this.setCanvas()
+                },
+                get_selected_prints: function (print) {
+                    return this.prints["designs"][print]
+                },
+                setCanvas: function () {
+
+                },
+                confirmLastStep(parent, value) {
+                    steps = parent + '|' + value
+
+                    return steps == this.isLastStep
+                },
+                showSaveButton(value, count, counts) {
+                    if (!this.isMobile()) {
+                        return false
+                    }
+                    if (!value) {
+                        return false
+                    } else {
+                        return (this.step == this.isLastStep) || (!this.isMobile())
+
+                    }
+                },
+                stepParent(value) {
+                    parent = this.step.split('|')[0]
+                    return (parent == value) || (!this.isMobile())
+                },
+
+                getStep(parent, value, step) {
+                    currentstep = this.getCurrentStep;
+                    x = this.step.split('|')
+                    if (this.isMobile()) {
+                        if (step.questiongroup === currentstep['questiongroup'] || (parent == x[0]) && (value == x[1])) {
+                            return true
+                        } else {
+                            return false
+                        }
+
+                    } else {
+                        return true;
+                    }
+
+                },
+                getNextStep(parent, value, validate) {
+
+                    this.$nextTick(function () {
+                        if (validate != 'false') {
+
+                            this.$validator.validateAll().then((result) => {
+                                if (result) {
+                                    parent_list = Object.keys(this.question_set)
+                                    step_list = Object.keys(this.question_set[parent_list[parent]]["attributes"])
+                                    if (this.step === "0|0") {
+                                        gtag('config', '{{store.google_tag}}', {'page_path': '/{{ object.design_url }}?step=personalizing'})
+                                    }
+                                    if (value == step_list.length - 1) {
+                                        this.getNextParent(parent)
+                                    } else {
+                                        steps = this.step.split('|')
+                                        this.step = steps[0] + '|' + (parseInt(value) + 1)
+                                    }
+                                }
+                            }).catch((result) => {
+                            })
+                        } else {
+                            parent_list = Object.keys(this.question_set)
+                            step_list = Object.keys(this.question_set[parent_list[parent]]["attributes"])
+                            if (value == step_list.length - 1) {
+                                this.getNextParent(parent)
+                            } else {
+                                steps = this.step.split('|')
+                                this.step = steps[0] + '|' + (parseInt(value) + 1)
+                            }
+                        }
+
+                    })
+                    if (this.isMobile()) {
+                        document.getElementById("question_top").scrollIntoView();
+                    }
+
+
+                },
+
+                loader() {
+                    this.percent += 10;
+                },
+                getNextParent(parent) {
+                    parent_list = Object.keys(this.question_set)
+                    if (parent == parent_list.length - 1) {
+
+                        this.$nextTick(function () {
+                            if (this.isMobile()) {
+                                $('#modalSmall').modal('show');
+                                this.percent = 0;
+
+                                setTimeout(() => {
+                                    this.loader();
+                                }, 300);
+                                setTimeout(() => {
+                                    this.loader();
+                                }, 400);
+                                setTimeout(() => {
+                                    this.loader();
+                                }, 700);
+                                setTimeout(() => {
+                                    this.loader();
+                                }, 1000);
+                                setTimeout(() => {
+                                    this.loader();
+                                }, 8000);
+                                setTimeout(() => {
+                                    this.loader();
+                                }, 10000);
+                                setTimeout(() => {
+                                    this.loader();
+                                }, 13000);
+                                setTimeout(() => {
+                                    this.loader();
+                                }, 16000);
+                                setTimeout(() => {
+                                    this.loader();
+                                }, 18000);
+                                setTimeout(() => {
+                                    this.loader();
+                                }, 20000);
+                            }
+
+                        });
+
+                    } else {
+                        steps = this.step.split('|')
+                        this.step = (parseInt(parent) + 1) + '|' + 0
+                    }
+                },
+                isMobile() {
+                    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                        return true
+                    } else {
+                        return false
+                    }
+                },
+                onSliderChange(evt) {
+                    var increment = evt.target.value
+                    this.myCroppa.scaleRatio = +increment
+                },
+                setPicture(key) {
+                    Vue.set(key, 'answer', this.dataUrl)
+                },
+                submitForm: function (e) {
+                    $('#modalSmall').modal('show');
+                    this.percent = 0;
+                    setTimeout(() => {
+                        this.loader();
+                    }, 300);
+                    setTimeout(() => {
+                        this.loader();
+                    }, 400);
+                    setTimeout(() => {
+                        this.loader();
+                    }, 700);
+                    setTimeout(() => {
+                        this.loader();
+                    }, 1000);
+                    setTimeout(() => {
+                        this.loader();
+                    }, 8000);
+                    setTimeout(() => {
+                        this.loader();
+                    }, 10000);
+                    setTimeout(() => {
+                        this.loader();
+                    }, 13000);
+                    setTimeout(() => {
+                        this.loader();
+                    }, 16000);
+                    setTimeout(() => {
+                        this.loader();
+                    }, 18000);
+                    setTimeout(() => {
+                        this.loader();
+                    }, 20000);
+                    this.$validator.validateAll().then((result) => {
+                        if (result) {
+                            if (!this.imageNotSelected) {
+                                this.imageSaving = true
+                                this.croppaImageMetaData = this.myCroppa.getMetadata()
+                                let ctx = this.myCroppa.getContext()
+                                ctx.clearRect(0, 0, 600, 600);
+                                ctx.drawImage(this.myCroppa.img, 0, 0, 600, 600)
+                                this.dataUrl = this.myCroppa.generateDataUrl()
+                                $('#picture').val(this.dataUrl);
+                                $("#picture").trigger("change");
+                                this.myCroppa.applyMetadata(this.croppaImageMetaData)
+
+                            }
+                        }
+                    }).catch(() => {
+
+                        $('#modalSmall').modal('hide')
+                        e.preventDefault();
+                    })
+
+
+                },
+                onZoom() {
+                    // To prevent zooming out of range when using scrolling to zoom
+                    // if (this.sliderMax && this.croppa.scaleRatio >= this.sliderMax) {
+                    //   this.croppa.scaleRatio = this.sliderMax
+                    // } else if (this.sliderMin && this.croppa.scaleRatio <= this.sliderMin) {
+                    //   this.croppa.scaleRatio = this.sliderMin
+                    // }
+
+                    this.sliderVal = this.myCroppa.scaleRatio
+                },
+                updateBg: function (color) {
+                    this.background = color;
+                },
+                updateColor: function (color) {
+
+                    this.color = color;
+                },
+                setImage: function (obj) {
+                    obj = this.dataUrl
+                },
+                saveCroppedImage() {
+                    this.imageSaving = true
+                    this.croppaImageMetaData = this.myCroppa.getMetadata()
+                    let ctx = this.myCroppa.getContext()
+                    ctx.clearRect(0, 0, 600, 600);
+                    this.dataUrl = this.myCroppa.generateDataUrl()
+                    $('#picture').val(this.dataUrl);
+                    $("#picture").trigger("change");
+                    this.imageSaving = false; //this generates the dataUrl for this demo, right side 'saved' result
+                    ctx.drawImage(this.myCroppa.img, 0, 0, 600, 600)
+                    //ctx.restore()
+                    this.myCroppa.applyMetadata(this.croppaImageMetaData)
+
+                },
+                onNewImageDrawn() {
+                    this.imageNotSelected = false
+                    this.sliderVal = this.myCroppa.scaleRatio
+                    this.sliderMin = this.myCroppa.scaleRatio / 2
+                    this.sliderMax = this.myCroppa.scaleRatio * 2
+                },
+                handleFileSizeExceed() {
+                    this.imageNotSelected = true
+                },
+                handleFileTypeMismatch() {
+                    this.imageNotSelected = true
+                },
+                selectNewImage() {
+                    this.myCroppa.remove()
+                    this.imageNotSelected = true
+                    this.myCroppa.chooseFile()
+
+                },
+                onDraw(ctx) {
+                    if (!this.imageSaving) {
+                        ctx.save()
+                        ctx.globalAlpha = 1.0
+                        // H
+                        ctx.beginPath()
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = "#ffffff"
+                        ctx.moveTo(0, this.canvasSize / 3)
+                        ctx.lineTo(this.canvasSize, this.canvasSize / 3)
+                        ctx.stroke();
+                        ctx.beginPath()
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = "#ffffff"
+                        ctx.moveTo(0, this.canvasSize / 1.5)
+                        ctx.lineTo(this.canvasSize, this.canvasSize / 1.5)
+                        ctx.stroke();
+                        // V
+                        ctx.beginPath()
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = "#ffffff"
+                        ctx.moveTo(this.canvasSize / 3, 0)
+                        ctx.lineTo(this.canvasSize / 3, this.canvasSize)
+                        ctx.stroke()
+                        ctx.beginPath()
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = "#ffffff"
+                        ctx.moveTo(this.canvasSize / 1.5, 0)
+                        ctx.lineTo(this.canvasSize / 1.5, this.canvasSize)
+                        ctx.stroke()
+                        // circle outline
+                        ctx.beginPath()
+                        ctx.globalAlpha = 1.0
+                        ctx.strokeStyle = "#ffffff";
+                        ctx.lineWidth = 10;
+                        ctx.arc(this.canvasSize / 2, this.canvasSize / 2, this.canvasSize / 5 * 2, 0, 2 * Math.PI, true)
+                        ctx.stroke()
+                        ctx.restore()
+                        //inverse circle fill
+                        ctx.save()
+                        ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+                        ctx.beginPath()
+                        ctx.arc(this.canvasSize / 2, this.canvasSize / 2, this.canvasSize / 5 * 2, 0, 2 * Math.PI)
+                        ctx.rect(this.canvasSize, 0, 0 - this.canvasSize, this.canvasSize)
+                        ctx.fill()
+                        ctx.closePath()
+                    } else {
+                        this.dataUrl = this.myCroppa.generateDataUrl()
+                        $('#picture').val(this.dataUrl);
+                        $("#picture").trigger("change");
+                        this.imageSaving = false; //this generates the dataUrl for this demo, right side 'saved' result
+                        this.onDraw(this.myCroppa.getContext())           // redraws the component with the overlay
+                    }
+                },
+            },
+            computed: {
+                hasShirt() {
+                    has_shirt = false;
+                    for (var key of Object.keys(this.shirt_collection)) {
+                        if (this.shirt_collection[key]['printid'] != "") {
+                            has_shirt = true;
+                        }
+                    }
+                    return has_shirt
+
+
+                },
+
+                getCurrentStep() {
+                    steps = this.step.split('|')
+                    parent_list = Object.keys(this.question_set)
+                    step_list = Object.keys(this.question_set[parent_list[steps[0]]]["attributes"])
+                    return this.question_set[parent_list[steps[0]]]["attributes"][step_list[steps[1]]]
+                },
+
+                getLastStep() {
+                    steps = this.step.split('|')
+                    last_step = this.getLastGrouping
+                    if ("questiongroup" in step) {
+                        return steps[0] + '|' + last_step
+                    } else {
+                        return steps[0] + '|' + steps[1]
+                    }
+                },
+                getLastGrouping() {
+                    step = this.getCurrentStep;
+                    last_step = 0
+                    steps = this.step.split('|')
+                    if ("questiongroup" in step) {
+                        parent_list = Object.keys(this.question_set)
+                        step_list = Object.keys(this.fquestion_set[parent_list[steps[0]]]["attributes"])
+                        var i;
+                        for (i = 0; i < step_list.length; i++) {
+                            checkStep = this.question_set[parent_list[steps[0]]]["attributes"][step_list[i]]
+                            if (checkStep['questiongroup'] === step['questiongroup']) {
+                                last_step = i
+                            }
+                        }
+                        return last_step
+                    } else {
+                        return this.steps[1]
+                    }
+                },
+
+                selectedPrint() {
+                    return this.prints["designs"]["base_design"]["prints"][this.getCurrentPrint]["id"]
+                },
+                showDesign: function () {
+                    return Object.keys(this.prints).length > 2
+                },
+
+                getAllDesign: function () {
+                    return this.all_prints["designs"][this.prints["selected_design"]]["prints"]
+                },
+                getDesign: function () {
+                    return this.prints["designs"][this.prints["selected_design"]]["prints"]
+                },
+                getDesignCategory: function () {
+                    let current = this.getCurrentPrintItem["category"]
+                    if (this.getCurrentPrintItem["category"] !== "") {
+                        console.log("Checking for Other Matches")
+                        let prints = this.prints["designs"][this.prints["selected_design"]]["prints"]
+                        return Object.keys(prints).reduce(function (filtered, key) {
+                            if (prints[key]["category"] == current) {
+                                filtered[key] = prints[key]
+                            }
+                            ;
+                            return filtered;
+                        }, {});
+                    } else {
+                        return {}
+                    }
+
+                },
+
+                getDesignColorKey: function (key) {
+                    return this.prints["designs"][key]["prints"][this.getCurrentPrint]["colors"]
+                },
+                getDesignColor: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["colors"]
+                },
+                getDesignColorSize: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["colors"][this.getCurrentColor]
+                },
+                getCurrentItem: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["colors"][this.getCurrentColor][this.getCurrentSize]
+                },
+                getCurrentDesign: function () {
+                    return this.prints["selected_design"]
+                },
+                getCurrentPrint: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["selected_print"]
+                },
+                getCurrentPrintItem: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]
+                },
+                getCurrentColor: function () {
+                    console.log('getting Color')
+                    return this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["selected_color"]
+                },
+                getCurrentSize: function () {
+                    return this.prints["designs"][this.getCurrentDesign]["prints"][this.getCurrentPrint]["selected_size"]
+                },
+                isLastStep: function () {
+                    keys = Object.keys(this.question_set)
+
+                    questions = Object.keys(this.question_set[keys[keys.length - 1]]["attributes"])
+
+                    return (keys.length - 1) + '|' + (questions.length - 1)
+                },
+                stripQuestionSet: function () {
+                    _this = this
+                    qs = {};
+                    obj_keys = Object.keys(this.question_set)
+                    for (item in obj_keys) {
+                        attr = Object.keys(this.question_set[obj_keys[item]]["attributes"])
+                        qs[obj_keys[item]] = {"attributes": {}, "name": this.question_set[obj_keys[item]]["name"]}
+                        for (answer in attr) {
+                            qs[obj_keys[item]]["attributes"][attr[answer]] = this.question_set[obj_keys[item]]["attributes"][attr[answer]]["answer"]
+                        }
+                    }
+                    return qs
+                },
+                generateJSON: function () {
+                    return {
+                        "background": this.background.replace("rgb", ""),
+                        "color": this.color.replace("rgb", ""),
+                        ...this.stripQuestionSet
+                    }
+
+                },
+                inputJSON: function () {
+                    return JSON.stringify(this.generateJSON)
+                }
+            }
+        })
+
+
+	</script>
+
+	<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "image": "{{ object.image_url }}",
+  "name": "{{ object.name }}",
+  "sku": "{{ object.slug }}",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://glamourbabyboutique.com/products/{{ object.slug }}",
+    "priceCurrency": "USD",
+    "price": "{{ object.price }}"
+  }
+}
+
+
+
+
+
+    </script>
+
+	<script>
+        const shareData = {
+            title: '{{ store.name }}',
+            text: 'Check out the shirt that I made on LaZapis',
+            url: '{{ request.build_absolute_uri }}',
+        }
+
+        const btn = document.getElementById('sharebutton')
+
+        btn.addEventListener('click', async () => {
+            try {
+                await navigator.share(shareData)
+            } catch (err) {
+            }
+        });
+	</script>
+{% endblock %}
+{% if messages %}
+
+	{% for message in messages %}
+		{% if message.level == 20 %}
+			<script>
+                {{ message|safe }}
+			</script>
+		{% endif %}
+
+	{% endfor %}
+
+{% endif %}
+</body>
+
+</html>
